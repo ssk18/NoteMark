@@ -1,5 +1,5 @@
 plugins {
-    id("notemark.android.library.compose")
+    alias(libs.plugins.notemark.android.library.compose)
 }
 
 android {
@@ -8,7 +8,7 @@ android {
 
 dependencies {
     implementation(libs.google.fonts)
-  //  implementation(projects.core.domain)
+    implementation(projects.core.domain)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -1,3 +1,4 @@
+import com.ssk.convention.configureKotlin
 import com.ssk.convention.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -8,6 +9,7 @@ class JvmLibraryConventionPlugin: Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.jvm")
 
             configureKotlinJvm()
+            configureKotlin()
         }
     }
 }
