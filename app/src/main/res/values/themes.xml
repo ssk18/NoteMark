@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.Notemark" parent="android:Theme.Material.Light.NoActionBar" />
+    
+    <style name="Theme.Notemark.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/solid_blue</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/notemark_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Notemark</item>
+    </style>
 </resources>
