@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="Notemark.auth.main" target="11" />
+      <module name="Notemark.auth.test" target="11" />
+      <module name="Notemark.build-logic.main" target="11" />
+      <module name="Notemark.build-logic.test" target="11" />
+      <module name="Notemark.core.main" target="11" />
+      <module name="Notemark.core.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
