@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.ssk.auth.data"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
-        minSdk = 30
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

@@ -15,10 +15,14 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun NoteMarkTheme(
-    content: @Composable () -> Unit
+    darkTheme: Boolean = false,
+    dynamicColor: Boolean = false,
+    content: @Composable () -> Unit,
 ) {
+    val colorScheme = LightColorScheme
+
     MaterialTheme(
-        colorScheme = LightColorScheme,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )

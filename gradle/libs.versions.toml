@@ -1,49 +1,50 @@
 [versions]
-agp = "8.7.3"
-kotlin = "2.0.21"
-coreKtx = "1.15.0"
+agp = "8.9.3"
+kotlin = "2.1.20"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
-composeBom = "2025.02.00"
-ksp = "2.0.21-1.0.28"
-room = "2.6.1"
-hilt = "2.52"
+composeBom = "2025.06.00"
+ksp = "2.1.20-2.0.0"
+room = "2.7.1"
+hilt = "2.56.1"
 hiltNavCompose = "1.2.0"
-navigation-compose = "2.8.8"
+navigation-compose = "2.9.0"
+navigation3 = "1.0.0-alpha03"
 splashscreen = "1.0.1"
 coil = "3.1.0"
 icons-extended = "1.7.8"
 gson = "2.11.0"
 glanceAppwidget = "1.1.1"
 groq = "0.1.1"
-ktor = "3.1.1"
-google-fonts = "1.7.8"
+ktor = "3.1.3"
+google-fonts = "1.8.2"
 accompanist = "0.30.1"
 jetbrainsKotlinJvm = "2.0.21"
-appcompat = "1.7.0"
+appcompat = "1.7.1"
 material = "1.12.0"
-coroutines = "1.10.1"
-kotlinx-serialization = "1.8.0"
+coroutines = "1.10.2"
+kotlinx-serialization = "1.8.1"
 sqlcipher = "4.5.4"
-sqlite = "2.4.0"
+sqlite = "2.5.1"
 koin = "4.0.0"
 timber = "5.0.1"
-androidTools = "31.9.1"
-securityCrypto = "1.1.0-alpha06"
-datastorePreferences = "1.1.4"
-androidx-datastore = "1.1.4"
-work = "2.10.0"
+androidTools = "31.10.1"
+securityCrypto = "1.1.0-beta01"
+datastorePreferences = "1.1.7"
+androidx-datastore = "1.1.7"
+work = "2.10.1"
 koin-annotations = "2.0.1-Beta1"
 
 # Project versions
 projectApplicationId = "com.ssk.notemark"
 projectVersionName = "1.0"
 projectMinSdkVersion = "26"
-projectTargetSdkVersion = "35"
-projectCompileSdkVersion = "35"
+projectTargetSdkVersion = "36"
+projectCompileSdkVersion = "36"
 projectVersionCode = "1"
 uiTooling = "1.7.7"
 
@@ -74,6 +75,9 @@ hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
@@ -160,8 +164,7 @@ compose-debug = [
 koin = [
     "koin-core",
     "koin-android",
-    "koin-android-workmanager",
-    "koin-androidx-startup"
+    "koin-android-workmanager"
 ]
 koin-compose = [
     "koin-core",

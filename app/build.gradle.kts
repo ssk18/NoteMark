@@ -28,4 +28,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Koin
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.compose)
+
+    // Navigation 3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+
+    implementation(projects.auth.presentation)
+    implementation(projects.core.presentation.designsystem)
+    implementation(projects.core.presentation.ui)
+    implementation(projects.core.data)
+    implementation(projects.core.domain)
+    implementation(projects.auth.data)
+    implementation(projects.auth.domain)
+
 }

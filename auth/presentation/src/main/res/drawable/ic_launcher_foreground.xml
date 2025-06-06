@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Full size background rectangle -->
+    <path
+        android:fillColor="#FF5977F7"
+        android:pathData="M0,0h108v108h-108z"/>
+    
+    <!-- Your logo/icon content here - example circle in center -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,24C65.05,24 74,32.95 74,44C74,55.05 65.05,64 54,64C42.95,64 34,55.05 34,44C34,32.95 42.95,24 54,24Z"/>
+    
+</vector>

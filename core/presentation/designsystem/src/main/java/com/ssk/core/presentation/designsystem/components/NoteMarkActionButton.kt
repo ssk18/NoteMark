@@ -1,6 +1,11 @@
 package com.ssk.core.presentation.designsystem.components
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -13,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
-fun NoteMarkActionButton(
+fun NoteMarkActionPrimaryButton(
     modifier: Modifier = Modifier,
     title: String,
     onClick: () -> Unit
@@ -21,7 +26,12 @@ fun NoteMarkActionButton(
     Button(
         onClick = onClick,
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.onPrimary,
+                shape = RoundedCornerShape(12.dp)
+            ),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -35,13 +45,52 @@ fun NoteMarkActionButton(
     }
 }
 
+@Composable
+fun NoteMarkActionSecondaryButton(
+    modifier: Modifier = Modifier,
+    title: String,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.onPrimary,
+            contentColor = MaterialTheme.colorScheme.primary
+        )
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleSmall
+        )
+    }
+}
+
 @Preview
 @Composable
 fun NoteMarkActionButtonPreview() {
     NoteMarkTheme {
-        NoteMarkActionButton(
-            title = "Get Started",
-            onClick = {}
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            NoteMarkActionPrimaryButton(
+                title = "Get Started",
+                onClick = {}
+            )
+            NoteMarkActionSecondaryButton(
+                title = "Log In",
+                onClick = {}
+            )
+        }
     }
 }
