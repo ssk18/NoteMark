@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -16,7 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +38,10 @@ fun NoteMarkTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     isFocused: Boolean = false,
     isPassword: Boolean = false,
-    placeholder: String
+    placeholder: String,
+    imeAction: ImeAction = ImeAction.Default,
+    onImeAction: () -> Unit = {},
+    onFocusLost: () -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
     val isPasswordVisible = remember { false }
@@ -59,6 +66,11 @@ fun NoteMarkTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused) {
+                        onFocusLost()
+                    }
+                }
                 .focusable(),
             value = value,
             onValueChange = onValueChange,
@@ -81,7 +93,9 @@ fun NoteMarkTextField(
             trailingIcon = trailingIcon,
             colors = appTextFieldColors(),
             singleLine = true,
-            shape = MaterialTheme.shapes.large
+            shape = MaterialTheme.shapes.large,
+            keyboardOptions = KeyboardOptions(imeAction = imeAction),
+            keyboardActions = KeyboardActions(onAny = { onImeAction() })
         )
     }
 }
