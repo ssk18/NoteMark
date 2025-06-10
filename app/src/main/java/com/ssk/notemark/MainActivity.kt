@@ -9,6 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.ssk.auth.presentation.landingscreen.LandingScreen
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.core.presentation.ui.ProvideOrientation
 import com.ssk.notemark.navigation.NoteMarkNavigation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,9 +32,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NoteMarkTheme {
-                NoteMarkNavigation(
-                    modifier = Modifier
-                )
+                ProvideOrientation {
+                    NoteMarkNavigation(
+                        modifier = Modifier
+                    )
+                }
             }
         }
     }

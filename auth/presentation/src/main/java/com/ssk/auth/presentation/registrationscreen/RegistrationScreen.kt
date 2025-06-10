@@ -30,6 +30,8 @@ import com.ssk.core.presentation.designsystem.components.NoteMarkActionPrimaryBu
 import com.ssk.core.presentation.designsystem.components.NoteMarkTextField
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 import com.ssk.core.presentation.designsystem.theme.NotemarkPrimary
+import com.ssk.core.presentation.ui.LocalScreenOrientation
+import com.ssk.core.presentation.ui.ScreenOrientation
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -49,6 +51,35 @@ fun RegistrationScreenRoot(
 
 @Composable
 fun RegistrationScreen(
+    modifier: Modifier = Modifier,
+    onAction: (RegistrationScreenAction) -> Unit,
+    registrationState: RegistrationScreenState,
+    onValidate: (String) -> Unit = {}
+) {
+    when (LocalScreenOrientation.current) {
+        ScreenOrientation.Portrait -> RegistrationPortraitContent(
+            modifier = modifier,
+            onAction = onAction,
+            registrationState = registrationState,
+            onValidate = onValidate
+        )
+        ScreenOrientation.Landscape -> RegistrationLandscapeContent(
+            modifier = modifier,
+            onAction = onAction,
+            registrationState = registrationState,
+            onValidate = onValidate
+        )
+        ScreenOrientation.Tablet -> RegistrationTabletContent(
+            modifier = modifier,
+            onAction = onAction,
+            registrationState = registrationState,
+            onValidate = onValidate
+        )
+    }
+}
+
+@Composable
+private fun RegistrationPortraitContent(
     modifier: Modifier = Modifier,
     onAction: (RegistrationScreenAction) -> Unit,
     registrationState: RegistrationScreenState,
@@ -192,6 +223,28 @@ fun RegistrationScreen(
             )
         }
     }
+}
+
+@Composable
+private fun RegistrationLandscapeContent(
+    modifier: Modifier = Modifier,
+    onAction: (RegistrationScreenAction) -> Unit,
+    registrationState: RegistrationScreenState,
+    onValidate: (String) -> Unit = {}
+) {
+    // TODO: Implement landscape layout
+    RegistrationPortraitContent(modifier, onAction, registrationState, onValidate)
+}
+
+@Composable
+private fun RegistrationTabletContent(
+    modifier: Modifier = Modifier,
+    onAction: (RegistrationScreenAction) -> Unit,
+    registrationState: RegistrationScreenState,
+    onValidate: (String) -> Unit = {}
+) {
+    // TODO: Implement tablet layout
+    RegistrationPortraitContent(modifier, onAction, registrationState, onValidate)
 }
 
 @Preview(showBackground = true)
