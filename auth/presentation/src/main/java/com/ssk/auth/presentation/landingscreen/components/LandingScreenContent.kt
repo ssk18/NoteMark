@@ -34,7 +34,8 @@ fun LandingScreenContent(
         Spacer(modifier = Modifier.height(32.dp))
         NoteMarkActionPrimaryButton(
             onClick = onSignUpClick,
-            title = stringResource(R.string.get_started)
+            title = stringResource(R.string.get_started),
+            enabled = true
         )
         Spacer(modifier = Modifier.height(16.dp))
         NoteMarkActionSecondaryButton(
