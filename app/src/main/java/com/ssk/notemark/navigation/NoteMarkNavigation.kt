@@ -36,7 +36,10 @@ fun NoteMarkNavigation(
 
                 Screen.Register -> NavEntry(key) { screen ->
                     RegistrationScreenRoot(
-                        modifier = modifier
+                        modifier = modifier,
+                        navigateToLogin = {
+                            backStack.add(Screen.Login)
+                        }
                     )
                 }
 

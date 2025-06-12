@@ -30,7 +30,7 @@ import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 import com.ssk.core.presentation.designsystem.theme.NotemarkPrimary
 
 @Composable
-fun RegistrationPortraitContent(
+fun RegistrationTabletContent(
     modifier: Modifier = Modifier,
     onAction: (RegistrationScreenAction) -> Unit,
     registrationState: RegistrationScreenState,
@@ -58,7 +58,7 @@ fun RegistrationPortraitContent(
                     )
                 )
                 .fillMaxHeight()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 120.dp, vertical = 100.dp),
         ) {
             Text(
                 text = "Create account",
@@ -178,11 +178,13 @@ fun RegistrationPortraitContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true,
+    device = "spec:width=1280dp,height=800dp,dpi=240,orientation=portrait"
+)
 @Composable
-fun RegistrationPortraitContentPreview() {
+fun RegistrationTabletContentPreview() {
     NoteMarkTheme {
-        RegistrationPortraitContent(
+        RegistrationTabletContent(
             onAction = {},
             registrationState = RegistrationScreenState(),
             navigateToLogin = {}
