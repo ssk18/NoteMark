@@ -5,6 +5,7 @@ sealed interface RegistrationScreenAction {
     data class OnPasswordChange(val password: String) : RegistrationScreenAction
     data class OnConfirmPasswordChange(val confirmPassword: String) : RegistrationScreenAction
     data class OnEmailChange(val email: String) : RegistrationScreenAction
-    data object OnSignUpClick : RegistrationScreenAction
-    data object OnSignInClick : RegistrationScreenAction
+    data object OnTogglePasswordVisibility : RegistrationScreenAction
+    data object OnToggleConfirmPasswordVisibility : RegistrationScreenAction
+    data object OnRegister : RegistrationScreenAction
 }

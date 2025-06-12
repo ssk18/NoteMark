@@ -21,7 +21,8 @@ import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 fun NoteMarkActionPrimaryButton(
     modifier: Modifier = Modifier,
     title: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean
 ) {
     Button(
         onClick = onClick,
@@ -36,7 +37,8 @@ fun NoteMarkActionPrimaryButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        ),
+        enabled = enabled
     ) {
         Text(
             text = title,
@@ -85,7 +87,8 @@ fun NoteMarkActionButtonPreview() {
         ) {
             NoteMarkActionPrimaryButton(
                 title = "Get Started",
-                onClick = {}
+                onClick = {},
+                enabled = true
             )
             NoteMarkActionSecondaryButton(
                 title = "Log In",

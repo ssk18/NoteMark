@@ -38,6 +38,7 @@ import org.koin.androidx.compose.koinViewModel
 fun RegistrationScreenRoot(
     modifier: Modifier,
     viewModel: RegistrationViewModel = koinViewModel(),
+    navigateToLogin: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     
@@ -45,7 +46,8 @@ fun RegistrationScreenRoot(
         modifier = modifier,
         onAction = viewModel::onAction,
         registrationState = state,
-        onValidate = viewModel::validateField
+        onValidate = viewModel::validateField,
+        navigateToLogin = navigateToLogin
     )
 }
 
@@ -54,14 +56,16 @@ fun RegistrationScreen(
     modifier: Modifier = Modifier,
     onAction: (RegistrationScreenAction) -> Unit,
     registrationState: RegistrationScreenState,
-    onValidate: (String) -> Unit = {}
+    onValidate: (String) -> Unit = {},
+    navigateToLogin: () -> Unit
 ) {
     when (LocalScreenOrientation.current) {
         ScreenOrientation.Portrait -> RegistrationPortraitContent(
             modifier = modifier,
             onAction = onAction,
             registrationState = registrationState,
-            onValidate = onValidate
+            onValidate = onValidate,
+            navigateToLogin = navigateToLogin
         )
         ScreenOrientation.Landscape -> RegistrationLandscapeContent(
             modifier = modifier,
@@ -83,7 +87,8 @@ private fun RegistrationPortraitContent(
     modifier: Modifier = Modifier,
     onAction: (RegistrationScreenAction) -> Unit,
     registrationState: RegistrationScreenState,
-    onValidate: (String) -> Unit = {}
+    onValidate: (String) -> Unit = {},
+    navigateToLogin: () -> Unit
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val sheetHeight = screenHeight * 0.1f
@@ -203,8 +208,9 @@ private fun RegistrationPortraitContent(
             NoteMarkActionPrimaryButton(
                 title = "Create Account",
                 onClick = {
-                    onAction(RegistrationScreenAction.OnSignUpClick)
-                }
+                    onAction(RegistrationScreenAction.OnRegister)
+                },
+                enabled = registrationState.canUserRegister
             )
 
             Spacer(Modifier.height(16.dp))
@@ -218,7 +224,7 @@ private fun RegistrationPortraitContent(
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
                     .clickable {
-                        onAction(RegistrationScreenAction.OnSignInClick)
+                        navigateToLogin()
                     }
             )
         }

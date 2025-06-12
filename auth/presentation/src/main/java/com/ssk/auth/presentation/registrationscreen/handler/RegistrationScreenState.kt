@@ -11,5 +11,11 @@ data class RegistrationScreenState(
     val usernameError: UiText? = null,
     val emailError: UiText? = null,
     val passwordError: UiText? = null,
-    val confirmPasswordError: UiText? = null
-)
+    val confirmPasswordError: UiText? = null,
+) {
+    val canUserRegister: Boolean
+        get() = usernameError == null && emailError == null &&
+                passwordError == null && confirmPasswordError == null &&
+                username.isNotBlank() && email.isNotBlank() &&
+                password.isNotBlank() && confirmPassword.isNotBlank()
+}
