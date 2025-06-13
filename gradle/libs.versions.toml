@@ -47,6 +47,7 @@ projectTargetSdkVersion = "36"
 projectCompileSdkVersion = "36"
 projectVersionCode = "1"
 uiTooling = "1.7.7"
+lifecycleViewmodelNavigation3Android = "1.0.0-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -128,6 +129,7 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+androidx-lifecycle-viewmodel-navigation3-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3-android", version.ref = "lifecycleViewmodelNavigation3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

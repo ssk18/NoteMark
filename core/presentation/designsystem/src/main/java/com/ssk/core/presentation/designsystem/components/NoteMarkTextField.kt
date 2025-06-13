@@ -1,12 +1,17 @@
 package com.ssk.core.presentation.designsystem.components
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -14,18 +19,25 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.core.presentation.designsystem.theme.PasswordNotVisibleIcon
+import com.ssk.core.presentation.designsystem.theme.PasswordVisibleIcon
 
 @Composable
 fun NoteMarkTextField(
@@ -34,17 +46,19 @@ fun NoteMarkTextField(
     onValueChange: (String) -> Unit,
     label: String,
     isError: Boolean = false,
-    supportingText: String,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    supportingText: String = "",
+    focusedSupportingText: String = "",
     isFocused: Boolean = false,
     isPassword: Boolean = false,
+    isPasswordVisible: Boolean = false,
     placeholder: String,
     imeAction: ImeAction = ImeAction.Default,
     onImeAction: () -> Unit = {},
-    onFocusLost: () -> Unit = {}
+    onFocusLost: () -> Unit = {},
+    onToggleShowPassword: (() -> Unit)? = null,
 ) {
     val focusRequester = remember { FocusRequester() }
-    val isPasswordVisible = remember { false }
+    var isFieldFocused by remember { mutableStateOf(false) }
 
     LaunchedEffect(isFocused) {
         if (isFocused) {
@@ -65,13 +79,14 @@ fun NoteMarkTextField(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester)
                 .onFocusChanged { focusState ->
+                    Log.d("NoteMarkTextField", "Focus changed: ${focusState.isFocused}")
+                    isFieldFocused = focusState.isFocused
                     if (!focusState.isFocused) {
                         onFocusLost()
                     }
                 }
-                .focusable(),
+                .focusRequester(focusRequester),
             value = value,
             onValueChange = onValueChange,
             placeholder = {
@@ -82,15 +97,34 @@ fun NoteMarkTextField(
                 )
             },
             supportingText = {
+                Log.d("NoteMarkTextField", "supportingText: $isFieldFocused ${focusedSupportingText.isNotEmpty()}")
+                val textToShow = when {
+                    isError -> supportingText
+                    isFieldFocused && focusedSupportingText.isNotEmpty() -> focusedSupportingText
+                    else -> supportingText
+                }
                 Text(
-                    text = supportingText,
+                    text = textToShow,
                     style = MaterialTheme.typography.bodySmall,
                     color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             },
             isError = isError,
             visualTransformation = if (isPassword && !isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-            trailingIcon = trailingIcon,
+            trailingIcon = {
+                if (isPassword) {
+                    Icon(
+                        imageVector = if (isPasswordVisible) PasswordVisibleIcon else PasswordNotVisibleIcon,
+                        contentDescription = "Password visibility",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clip(CircleShape)
+                            .clickable() {
+                                onToggleShowPassword?.invoke()
+                            }
+                    )
+                }
+            },
             colors = appTextFieldColors(),
             singleLine = true,
             shape = MaterialTheme.shapes.large,
@@ -132,7 +166,8 @@ fun NoteMarkTextFieldPreview() {
             isFocused = false,
             isPassword = false,
             supportingText = "",
-            isError = false
+            isError = false,
+            onToggleShowPassword = {}
         )
     }
 }

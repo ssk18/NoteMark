@@ -43,8 +43,12 @@ class RegistrationViewModel : ViewModel() {
             }
 
             RegistrationScreenAction.OnRegister -> TODO()
-            RegistrationScreenAction.OnToggleConfirmPasswordVisibility -> TODO()
-            RegistrationScreenAction.OnTogglePasswordVisibility -> TODO()
+            RegistrationScreenAction.OnToggleConfirmPasswordVisibility -> {
+                _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
+            }
+            RegistrationScreenAction.OnTogglePasswordVisibility -> {
+                _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
+            }
         }
     }
 
