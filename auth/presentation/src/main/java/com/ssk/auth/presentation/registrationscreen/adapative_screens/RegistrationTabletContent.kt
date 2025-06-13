@@ -120,14 +120,19 @@ fun RegistrationTabletContent(
                 label = "Password",
                 placeholder = "Enter your Password",
                 supportingText = registrationState.passwordError?.asString() ?: "",
+                focusedSupportingText = "Use 8+ characters with a number or symbol for better security",
                 isError = registrationState.passwordError != null,
                 isPassword = true,
+                isPasswordVisible = registrationState.isPasswordVisible,
                 imeAction = ImeAction.Next,
                 onImeAction = {
                     onValidate("password")
                     focusManager.moveFocus(FocusDirection.Down)
                 },
-                onFocusLost = { onValidate("password") }
+                onFocusLost = { onValidate("password") },
+                onToggleShowPassword = {
+                    onAction(RegistrationScreenAction.OnTogglePasswordVisibility)
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -142,12 +147,16 @@ fun RegistrationTabletContent(
                 supportingText = registrationState.confirmPasswordError?.asString() ?: "",
                 isError = registrationState.confirmPasswordError != null,
                 isPassword = true,
+                isPasswordVisible = registrationState.isPasswordVisible,
                 imeAction = ImeAction.Done,
                 onImeAction = {
                     onValidate("confirmPassword")
                     focusManager.clearFocus()
                 },
-                onFocusLost = { onValidate("confirmPassword") }
+                onFocusLost = { onValidate("confirmPassword") },
+                onToggleShowPassword = {
+                    onAction(RegistrationScreenAction.OnTogglePasswordVisibility)
+                }
             )
 
             Spacer(Modifier.height(16.dp))

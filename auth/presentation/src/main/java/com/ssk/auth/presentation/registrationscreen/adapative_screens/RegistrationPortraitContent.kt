@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -120,14 +121,19 @@ fun RegistrationPortraitContent(
                 label = "Password",
                 placeholder = "Enter your Password",
                 supportingText = registrationState.passwordError?.asString() ?: "",
+                focusedSupportingText = "Use 8+ characters with a number or symbol for better security",
                 isError = registrationState.passwordError != null,
                 isPassword = true,
+                isPasswordVisible = registrationState.isPasswordVisible,
                 imeAction = ImeAction.Next,
                 onImeAction = {
                     onValidate("password")
                     focusManager.moveFocus(FocusDirection.Down)
                 },
-                onFocusLost = { onValidate("password") }
+                onFocusLost = { onValidate("password") },
+                onToggleShowPassword = {
+                    onAction(RegistrationScreenAction.OnTogglePasswordVisibility)
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -142,12 +148,16 @@ fun RegistrationPortraitContent(
                 supportingText = registrationState.confirmPasswordError?.asString() ?: "",
                 isError = registrationState.confirmPasswordError != null,
                 isPassword = true,
+                isPasswordVisible = registrationState.isPasswordVisible,
                 imeAction = ImeAction.Done,
                 onImeAction = {
                     onValidate("confirmPassword")
                     focusManager.clearFocus()
                 },
-                onFocusLost = { onValidate("confirmPassword") }
+                onFocusLost = { onValidate("confirmPassword") },
+                onToggleShowPassword = {
+                    onAction(RegistrationScreenAction.OnTogglePasswordVisibility)
+                }
             )
 
             Spacer(Modifier.height(16.dp))
