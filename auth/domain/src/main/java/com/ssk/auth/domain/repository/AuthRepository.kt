@@ -1,6 +1,5 @@
 package com.ssk.auth.domain.repository
 
-import com.ssk.auth.domain.models.Register
 import com.ssk.core.domain.DataError
 import com.ssk.core.domain.EmptyResult
 

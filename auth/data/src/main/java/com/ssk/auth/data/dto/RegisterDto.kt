@@ -1,4 +1,4 @@
-package com.ssk.auth.data.DTO
+package com.ssk.auth.data.dto
 
 import com.ssk.auth.domain.models.Register
 import kotlinx.serialization.Serializable

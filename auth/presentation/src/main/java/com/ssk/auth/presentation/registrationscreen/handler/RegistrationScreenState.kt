@@ -1,8 +1,10 @@
 package com.ssk.auth.presentation.registrationscreen.handler
 
+import com.ssk.core.presentation.designsystem.components.SnackbarType
 import com.ssk.core.presentation.ui.UiText
 
 data class RegistrationScreenState(
+    val isRegistering: Boolean = false,
     val username: String = "",
     val password: String = "",
     val confirmPassword: String = "",
@@ -12,6 +14,7 @@ data class RegistrationScreenState(
     val emailError: UiText? = null,
     val passwordError: UiText? = null,
     val confirmPasswordError: UiText? = null,
+    val snackbarType: SnackbarType = SnackbarType.Success
 ) {
     val canUserRegister: Boolean
         get() = usernameError == null && emailError == null &&

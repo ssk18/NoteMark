@@ -1,7 +1,8 @@
 package com.ssk.auth.data.repository
 
-import com.ssk.auth.data.DTO.RegisterDto
+import com.ssk.auth.data.dto.RegisterDto
 import com.ssk.auth.domain.repository.AuthRepository
+import com.ssk.core.data.Routes
 import com.ssk.core.data.network.post
 import com.ssk.core.domain.DataError
 import com.ssk.core.domain.EmptyResult
@@ -17,7 +18,7 @@ class AuthRepositoryImpl(
         username: String
     ): EmptyResult<DataError.Network> {
         return httpClient.post<RegisterDto, Unit>(
-            route = "/register",
+            route = Routes.REGISTATION,
             body = RegisterDto(
                 email = email,
                 password = password,

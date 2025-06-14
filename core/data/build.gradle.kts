@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.notemark.android.library)
+    alias(libs.plugins.notemark.jvm.ktor)
 }
 
 android {
