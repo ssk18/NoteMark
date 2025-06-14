@@ -42,5 +42,9 @@ gradlePlugin {
             id = "notemark.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
+        register("jvmKtor") {
+            id = "notemark.jvm.ktor"
+            implementationClass = "JvmKtorConventionPlugin"
+        }
     }
 }

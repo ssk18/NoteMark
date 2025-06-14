@@ -1,4 +1,3 @@
 package com.ssk.core.domain
 
-class MyClass {
-}
+interface Error

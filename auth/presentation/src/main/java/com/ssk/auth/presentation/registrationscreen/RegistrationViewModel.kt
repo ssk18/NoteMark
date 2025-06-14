@@ -1,15 +1,12 @@
 package com.ssk.auth.presentation.registrationscreen
 
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenAction
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenState
 import com.ssk.core.presentation.ui.UiText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class RegistrationViewModel : ViewModel() {
 
@@ -64,7 +61,8 @@ class RegistrationViewModel : ViewModel() {
     private fun validateUsername(username: String) {
         val error = when {
             username.isBlank() -> null // Don't show error for empty untouched fields
-            username.length < 3 -> UiText.DynamicString("Username must be at least 3 characters")
+            username.length < 3 -> UiText.DynamicString("“Username must be at least 3 characters.")
+            username.length > 20 -> UiText.DynamicString("Username can’t be longer than 20 characters.")
             else -> null
         }
         _state.update { it.copy(usernameError = error) }
@@ -74,7 +72,7 @@ class RegistrationViewModel : ViewModel() {
         val error = when {
             email.isBlank() -> null // Don't show error for empty untouched fields
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
-                UiText.DynamicString("Invalid email format")
+                UiText.DynamicString("“Invalid email provided")
 
             else -> null
         }
@@ -84,7 +82,8 @@ class RegistrationViewModel : ViewModel() {
     private fun validatePassword(password: String) {
         val error = when {
             password.isBlank() -> null // Don't show error for empty untouched fields
-            password.length < 8 -> UiText.DynamicString("Password must be at least 8 chars long")
+            password.length < 8 -> UiText.DynamicString("Password must be at least 8 characters and\n" +
+                    "include a number or symbol.")
             !password.any { it.isDigit() || !it.isLetterOrDigit() } ->
                 UiText.DynamicString("Password must contain number or symbol")
 
