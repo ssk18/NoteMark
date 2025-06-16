@@ -1,9 +1,9 @@
 package com.ssk.core.data.network
 
 import com.ssk.core.data.Routes
-import com.ssk.core.data.models.Constants
-import com.ssk.core.data.models.AccessTokenResponse
 import com.ssk.core.data.models.AccessTokenRequest
+import com.ssk.core.data.models.AccessTokenResponse
+import com.ssk.core.data.models.Constants
 import com.ssk.core.domain.Result
 import com.ssk.core.domain.SessionStorage
 import io.ktor.client.HttpClient
@@ -16,7 +16,6 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.accept
 import io.ktor.client.request.header
 import io.ktor.http.ContentType

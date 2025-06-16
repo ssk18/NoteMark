@@ -1,4 +1,4 @@
-package com.ssk.auth.presentation.registrationscreen
+package com.ssk.auth.presentation.loginscreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationLandscapeContent
-import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationPortraitContent
-import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationTabletContent
-import com.ssk.auth.presentation.registrationscreen.handler.RegisterEvent
-import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenAction
-import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenState
+import com.ssk.auth.presentation.loginscreen.adapative_screens.LoginLandscapeContent
+import com.ssk.auth.presentation.loginscreen.adapative_screens.LoginPortraitContent
+import com.ssk.auth.presentation.loginscreen.adapative_screens.LoginTabletContent
+import com.ssk.auth.presentation.loginscreen.handler.LoginAction
+import com.ssk.auth.presentation.loginscreen.handler.LoginEvent
+import com.ssk.auth.presentation.loginscreen.handler.LoginState
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.components.NoteMarkSnackBar
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
@@ -30,10 +30,10 @@ import com.ssk.core.presentation.ui.ScreenOrientation
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun RegistrationScreenRoot(
+fun LoginScreenRoot(
     modifier: Modifier,
-    viewModel: RegistrationViewModel = koinViewModel(),
-    navigateToLogin: () -> Unit
+    viewModel: LoginViewModel = koinViewModel(),
+    navigateToRegister: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -41,15 +41,15 @@ fun RegistrationScreenRoot(
 
     ObserveAsEvents(viewModel.eventChannel) { event ->
         when (event) {
-            is RegisterEvent.Error -> {
+            is LoginEvent.Error -> {
                 snackBarHostState.showSnackbar(
                     message = event.error.asString(context)
                 )
             }
 
-            RegisterEvent.RegistrationSuccess -> {
+            LoginEvent.LoginSuccess -> {
                 snackBarHostState.showSnackbar(
-                    message = "Registration Successful"
+                    message = "Login Successful"
                 )
             }
         }
@@ -74,15 +74,15 @@ fun RegistrationScreenRoot(
             }
         }
     ) {
-        RegistrationScreen(
+        LoginScreen(
             onAction = viewModel::onAction,
-            registrationState = state,
+            loginState = state,
             onValidate = viewModel::validateField,
-            navigateToLogin = navigateToLogin
+            navigateToRegister = navigateToRegister
         )
     }
 
-    if (state.isRegistering) {
+    if (state.isLoggingIn) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -93,39 +93,37 @@ fun RegistrationScreenRoot(
 }
 
 @Composable
-fun RegistrationScreen(
+fun LoginScreen(
     modifier: Modifier = Modifier,
-    onAction: (RegistrationScreenAction) -> Unit,
-    registrationState: RegistrationScreenState,
+    onAction: (LoginAction) -> Unit,
+    loginState: LoginState,
     onValidate: (String) -> Unit = {},
-    navigateToLogin: () -> Unit
+    navigateToRegister: () -> Unit
 ) {
     when (LocalScreenOrientation.current) {
-        ScreenOrientation.Portrait -> RegistrationPortraitContent(
+        ScreenOrientation.Portrait -> LoginPortraitContent(
             modifier = modifier,
             onAction = onAction,
-            registrationState = registrationState,
+            loginState = loginState,
             onValidate = onValidate,
-            navigateToLogin = navigateToLogin
+            navigateToRegister = navigateToRegister
         )
 
-        ScreenOrientation.Landscape -> RegistrationLandscapeContent(
+        ScreenOrientation.Landscape -> LoginLandscapeContent(
             modifier = modifier,
             onAction = onAction,
-            registrationState = registrationState,
+            loginState = loginState,
             onValidate = onValidate,
-            navigateToLogin = navigateToLogin
+            navigateToLogin = navigateToRegister
         )
 
-        ScreenOrientation.Tablet -> {
-            RegistrationTabletContent(
-                modifier = modifier,
-                onAction = onAction,
-                registrationState = registrationState,
-                onValidate = onValidate,
-                navigateToLogin = navigateToLogin
-            )
-        }
+        ScreenOrientation.Tablet -> LoginTabletContent(
+            modifier = modifier,
+            onAction = onAction,
+            loginState = loginState,
+            onValidate = onValidate,
+            navigateToLogin = navigateToRegister
+        )
     }
 }
 
@@ -133,10 +131,10 @@ fun RegistrationScreen(
 @Composable
 fun RegistrationScreenPreview() {
     NoteMarkTheme {
-        RegistrationScreen(
+        LoginScreen(
             onAction = {},
-            registrationState = RegistrationScreenState(),
-            navigateToLogin = {}
+            loginState = LoginState(),
+            navigateToRegister = {}
         )
     }
 }

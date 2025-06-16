@@ -6,10 +6,3 @@ sealed interface RegisterEvent {
     data object RegistrationSuccess: RegisterEvent
     data class Error(val error: UiText): RegisterEvent
 }
-
-enum class ValidationField {
-    USERNAME,
-    EMAIL, 
-    PASSWORD,
-    CONFIRM_PASSWORD
-}
