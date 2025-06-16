@@ -80,7 +80,7 @@ fun RegistrationPortraitContent(
                     onAction(RegistrationScreenAction.OnUserNameChange(it))
                 },
                 label = "Username",
-                placeholder = "Enter your username",
+                placeholder = "john.doe",
                 supportingText = registrationState.usernameError?.asString() ?: "",
                 isError = registrationState.usernameError != null,
                 imeAction = ImeAction.Next,
@@ -99,7 +99,7 @@ fun RegistrationPortraitContent(
                     onAction(RegistrationScreenAction.OnEmailChange(it))
                 },
                 label = "Email",
-                placeholder = "Enter your Email",
+                placeholder = "john.doe@example.com",
                 supportingText = registrationState.emailError?.asString() ?: "",
                 isError = registrationState.emailError != null,
                 imeAction = ImeAction.Next,
@@ -118,7 +118,7 @@ fun RegistrationPortraitContent(
                     onAction(RegistrationScreenAction.OnPasswordChange(it))
                 },
                 label = "Password",
-                placeholder = "Enter your Password",
+                placeholder = "Password",
                 supportingText = registrationState.passwordError?.asString() ?: "",
                 focusedSupportingText = "Use 8+ characters with a number or symbol for better security",
                 isError = registrationState.passwordError != null,
@@ -143,7 +143,7 @@ fun RegistrationPortraitContent(
                     onAction(RegistrationScreenAction.OnConfirmPasswordChange(it))
                 },
                 label = "Confirm Password",
-                placeholder = "Confirm your Password",
+                placeholder = "Password",
                 supportingText = registrationState.confirmPasswordError?.asString() ?: "",
                 isError = registrationState.confirmPasswordError != null,
                 isPassword = true,

@@ -98,7 +98,7 @@ fun LoginLandscapeContent(
                         onAction(LoginAction.OnEmailChange(it))
                     },
                     label = "Email",
-                    placeholder = "Enter your Email",
+                    placeholder = "john.doe@example.com",
                     supportingText = loginState.emailError?.asString() ?: "",
                     isError = loginState.emailError != null,
                     imeAction = ImeAction.Next,
@@ -116,7 +116,7 @@ fun LoginLandscapeContent(
                         onAction(LoginAction.OnPasswordChange(it))
                     },
                     label = "Password",
-                    placeholder = "Enter your Password",
+                    placeholder = "Password",
                     supportingText = loginState.passwordError?.asString() ?: "",
                     isError = loginState.passwordError != null,
                     isPassword = true,
