@@ -146,6 +146,11 @@ class RegistrationViewModel(
                 }
 
                 is Result.Success -> {
+                    _state.update {
+                        it.copy(
+                            snackbarType = SnackbarType.Success
+                        )
+                    }
                     _eventChannel.send(RegisterEvent.RegistrationSuccess)
                 }
             }
