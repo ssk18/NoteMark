@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         }
 
         lifecycleScope.launch {
-            delay(3000)
+            delay(2000)
             keepSplashOnScreen = false
         }
         enableEdgeToEdge()

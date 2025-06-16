@@ -64,7 +64,7 @@ fun RegistrationLandscapeContent(
                     )
                 )
                 .fillMaxHeight()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 32.dp, vertical = 32.dp)
         ) {
             Column(
                 modifier = Modifier.weight(1f),
