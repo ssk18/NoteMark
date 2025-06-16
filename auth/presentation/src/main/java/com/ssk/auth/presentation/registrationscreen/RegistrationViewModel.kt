@@ -2,8 +2,8 @@ package com.ssk.auth.presentation.registrationscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssk.auth.domain.repository.AuthRepository
 import com.ssk.auth.presentation.R
+import com.ssk.auth.domain.repository.AuthRepository
 import com.ssk.auth.presentation.registrationscreen.handler.RegisterEvent
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenAction
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenState
@@ -78,8 +78,8 @@ class RegistrationViewModel(
     private fun validateUsername(username: String) {
         val error = when {
             username.isBlank() -> null // Don't show error for empty untouched fields
-            username.length < 3 -> UiText.DynamicString("“Username must be at least 3 characters.")
-            username.length > 20 -> UiText.DynamicString("Username can’t be longer than 20 characters.")
+            username.length < 3 -> UiText.StringResource(R.string.username_too_short)
+            username.length > 20 -> UiText.StringResource(R.string.username_too_long)
             else -> null
         }
         _state.update { it.copy(usernameError = error) }
@@ -89,8 +89,7 @@ class RegistrationViewModel(
         val error = when {
             email.isBlank() -> null // Don't show error for empty untouched fields
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
-                UiText.DynamicString("“Invalid email provided")
-
+                UiText.StringResource(R.string.invalid_email)
             else -> null
         }
         _state.update { it.copy(emailError = error) }
@@ -99,14 +98,9 @@ class RegistrationViewModel(
     private fun validatePassword(password: String) {
         val error = when {
             password.isBlank() -> null // Don't show error for empty untouched fields
-            password.length < 8 -> UiText.DynamicString(
-                "Password must be at least 8 characters and\n" +
-                        "include a number or symbol."
-            )
-
+            password.length < 8 -> UiText.StringResource(R.string.password_validation_multiline)
             !password.any { it.isDigit() || !it.isLetterOrDigit() } ->
-                UiText.DynamicString("Password must contain number or symbol")
-
+                UiText.StringResource(R.string.password_validation_symbol)
             else -> null
         }
         _state.update { it.copy(passwordError = error) }
@@ -115,7 +109,7 @@ class RegistrationViewModel(
     private fun validateConfirmPassword(confirmPassword: String) {
         val error = when {
             confirmPassword.isBlank() -> null // Don't show error for empty untouched fields
-            confirmPassword != state.value.password -> UiText.DynamicString("Passwords do not match")
+            confirmPassword != state.value.password -> UiText.StringResource(R.string.passwords_not_match)
             else -> null
         }
         _state.update { it.copy(confirmPasswordError = error) }

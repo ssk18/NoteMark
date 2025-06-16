@@ -2,6 +2,7 @@ package com.ssk.auth.presentation.loginscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssk.auth.presentation.R
 import com.ssk.auth.domain.repository.AuthRepository
 import com.ssk.auth.presentation.loginscreen.handler.LoginAction
 import com.ssk.auth.presentation.loginscreen.handler.LoginEvent
@@ -80,7 +81,7 @@ class LoginViewModel(
 
     private fun validateEmail(email: String) {
         val error = when {
-            email.isBlank() -> null // Don't show error for empty untouched fields
+            email.isBlank() -> null
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
                 UiText.DynamicString("“Invalid email provided")
 
@@ -91,14 +92,11 @@ class LoginViewModel(
 
     private fun validatePassword(password: String) {
         val error = when {
-            password.isBlank() -> null // Don't show error for empty untouched fields
-            password.length < 8 -> UiText.DynamicString(
-                "Password must be at least 8 characters and\n" +
-                        "include a number or symbol."
-            )
+            password.isBlank() -> null
+            password.length < 8 -> UiText.StringResource(R.string.password_validation_multiline)
 
             !password.any { it.isDigit() || !it.isLetterOrDigit() } ->
-                UiText.DynamicString("Password must contain number or symbol")
+                UiText.StringResource(R.string.password_validation_symbol)
 
             else -> null
         }

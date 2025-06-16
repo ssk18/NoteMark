@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ssk.auth.presentation.R
 import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationLandscapeContent
 import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationPortraitContent
 import com.ssk.auth.presentation.registrationscreen.adapative_screens.RegistrationTabletContent
@@ -49,7 +51,7 @@ fun RegistrationScreenRoot(
 
             RegisterEvent.RegistrationSuccess -> {
                 snackBarHostState.showSnackbar(
-                    message = "Registration Successful"
+                    message = context.getString(R.string.registration_successful)
                 )
             }
         }

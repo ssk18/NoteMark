@@ -1,8 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Landing Screen -->
     <string name="your_own_collection_of_notes">Your Own Collection of Notes</string>
     <string name="capture_your_thoughts_and_ideas">Capture your thoughts and ideas</string>
     <string name="get_started">Get Started</string>
+    
+    <!-- Login Screen -->
     <string name="log_in">Log In</string>
+    <string name="capture_your_thoughts_and_ideas_subtitle">Capture your thoughts and ideas</string>
+    <string name="capture_your_thoughts_and_ideas_subtitle_period">Capture your thoughts and ideas.</string>
+    <string name="email">Email</string>
+    <string name="email_placeholder_john">john.doe@example.com</string>
+    <string name="email_placeholder_enter">Enter your Email</string>
+    <string name="password">Password</string>
+    <string name="password_placeholder">Password</string>
+    <string name="password_placeholder_enter">Enter your Password</string>
+    <string name="login_button">Log in</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    
+    <!-- Registration Screen -->
+    <string name="create_account">Create account</string>
+    <string name="username">Username</string>
+    <string name="username_placeholder">Enter your username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password_placeholder">Confirm your Password</string>
+    <string name="password_hint">Use 8+ characters with a number or symbol for better security</string>
+    <string name="create_account_button">Create Account</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="registration_successful">Registration Successful</string>
+    
+    <!-- Validation Messages -->
+    <string name="invalid_email">Invalid email provided</string>
+    <string name="password_validation_multiline">Password must be at least 8 characters and\ninclude a number or symbol.</string>
+    <string name="password_validation_symbol">Password must contain number or symbol</string>
+    <string name="username_too_short">Username must be at least 3 characters.</string>
+    <string name="username_too_long">Username can\'t be longer than 20 characters.</string>
+    <string name="passwords_not_match">Passwords do not match</string>
+    
+    <!-- Other -->
+    <string name="blank_screen">Blank screen</string>
+    <string name="password_visibility">Password visibility</string>
+    
+    <!-- Existing -->
     <string name="a_user_with_that_email_already_exists">A User with that email already exists</string>
 </resources>

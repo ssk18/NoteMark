@@ -49,9 +49,6 @@ fun LoginScreenRoot(
             }
 
             LoginEvent.LoginSuccess -> {
-                snackBarHostState.showSnackbar(
-                    message = "Login Successful"
-                )
                 onLoginSuccess()
             }
         }
