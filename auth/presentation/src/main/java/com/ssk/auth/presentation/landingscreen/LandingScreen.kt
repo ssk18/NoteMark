@@ -83,7 +83,7 @@ fun LandingScreenPortrait(
                         topEnd = 20.dp
                     )
                 )
-                .padding(16.dp),
+                .padding(horizontal = 16.dp, vertical = 32.dp),
             onSignUpClick = onSignUpClick,
             onSignInClick = onSignInClick
         )

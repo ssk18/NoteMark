@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -28,6 +29,7 @@ fun NoteMarkActionPrimaryButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
+            .height(48.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -57,6 +59,7 @@ fun NoteMarkActionSecondaryButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
+            .height(48.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary,
