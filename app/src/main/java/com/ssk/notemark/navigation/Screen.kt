@@ -11,3 +11,6 @@ data object Register : NavKey
 
 @Serializable
 data object Login : NavKey
+
+@Serializable
+data object BlankScreen : NavKey

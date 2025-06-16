@@ -9,6 +9,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
+import com.ssk.auth.presentation.BlankScreen
 import com.ssk.auth.presentation.landingscreen.LandingScreen
 import com.ssk.auth.presentation.loginscreen.LoginScreenRoot
 import com.ssk.auth.presentation.registrationscreen.RegistrationScreenRoot
@@ -37,9 +38,11 @@ fun NoteMarkNavigation(
                     ) {
                         LandingScreen(
                             onSignInClick = {
+                                backStack.removeLastOrNull()
                                 backStack.add(Login)
                             },
                             onSignUpClick = {
+                                backStack.removeLastOrNull()
                                 backStack.add(Register)
                             },
                             modifier = modifier
@@ -54,6 +57,7 @@ fun NoteMarkNavigation(
                         RegistrationScreenRoot(
                             modifier = modifier,
                             navigateToLogin = {
+                                backStack.removeLastOrNull()
                                 backStack.add(Login)
                             }
                         )
@@ -67,9 +71,22 @@ fun NoteMarkNavigation(
                         LoginScreenRoot(
                             modifier = modifier,
                             navigateToRegister = {
+                                backStack.removeLastOrNull()
                                 backStack.add(Register)
+                            },
+                            onLoginSuccess = {
+                                backStack.clear()
+                                backStack.add(BlankScreen)
                             }
                         )
+                    }
+                }
+
+                BlankScreen -> {
+                    NavEntry(
+                        key = key
+                    ) {
+                        BlankScreen(modifier = modifier)
                     }
                 }
 

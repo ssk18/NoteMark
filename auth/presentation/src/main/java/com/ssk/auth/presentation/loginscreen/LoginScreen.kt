@@ -33,7 +33,8 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginScreenRoot(
     modifier: Modifier,
     viewModel: LoginViewModel = koinViewModel(),
-    navigateToRegister: () -> Unit
+    navigateToRegister: () -> Unit,
+    onLoginSuccess: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -51,6 +52,7 @@ fun LoginScreenRoot(
                 snackBarHostState.showSnackbar(
                     message = "Login Successful"
                 )
+                onLoginSuccess()
             }
         }
     }
