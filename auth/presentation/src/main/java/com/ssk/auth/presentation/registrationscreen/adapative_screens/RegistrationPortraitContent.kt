@@ -85,6 +85,7 @@ fun RegistrationPortraitContent(
                 label = "Username",
                 placeholder = "john.doe",
                 supportingText = registrationState.usernameError?.asString() ?: "",
+                focusedSupportingText = "Use between 3 and 20 characters for your username.",
                 isError = registrationState.usernameError != null,
                 imeAction = ImeAction.Next,
                 onImeAction = {
@@ -169,7 +170,8 @@ fun RegistrationPortraitContent(
                 onClick = {
                     onAction(RegistrationScreenAction.OnRegister)
                 },
-                enabled = registrationState.canUserRegister
+                enabled = registrationState.canUserRegister,
+                isLoading = registrationState.isRegistering
             )
 
             Spacer(Modifier.height(16.dp))

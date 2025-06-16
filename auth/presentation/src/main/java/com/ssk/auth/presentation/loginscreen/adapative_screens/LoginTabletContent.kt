@@ -122,7 +122,8 @@ fun LoginTabletContent(
                 onClick = {
                     onAction(LoginAction.OnLogin )
                 },
-                enabled = loginState.canUserLogin
+                enabled = loginState.canUserLogin,
+                isLoading = loginState.isLoggingIn
             )
 
             Spacer(Modifier.height(16.dp))

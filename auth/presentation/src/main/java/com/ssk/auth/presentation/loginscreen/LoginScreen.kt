@@ -80,15 +80,6 @@ fun LoginScreenRoot(
             navigateToRegister = navigateToRegister
         )
     }
-
-    if (state.isLoggingIn) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }
 }
 
 @Composable

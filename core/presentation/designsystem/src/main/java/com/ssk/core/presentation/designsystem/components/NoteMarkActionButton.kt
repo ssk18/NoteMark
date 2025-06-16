@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 fun NoteMarkActionPrimaryButton(
     modifier: Modifier = Modifier,
     title: String,
+    isLoading: Boolean = false,
     onClick: () -> Unit,
     enabled: Boolean
 ) {
@@ -42,10 +45,19 @@ fun NoteMarkActionPrimaryButton(
         ),
         enabled = enabled
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleSmall
-        )
+        if (isLoading) {
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier
+                    .size(25.dp)
+                    .padding(top = 4.dp, bottom = 4.dp)
+            )
+        } else {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
     }
 }
 
@@ -91,7 +103,8 @@ fun NoteMarkActionButtonPreview() {
             NoteMarkActionPrimaryButton(
                 title = "Get Started",
                 onClick = {},
-                enabled = true
+                enabled = true,
+                isLoading = true
             )
             NoteMarkActionSecondaryButton(
                 title = "Log In",
