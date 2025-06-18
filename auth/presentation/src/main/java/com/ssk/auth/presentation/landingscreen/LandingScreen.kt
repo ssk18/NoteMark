@@ -42,7 +42,6 @@ fun LandingScreen(
             modifier = modifier,
             onSignUpClick = onSignUpClick,
             onSignInClick = onSignInClick
-
         )
 
         ScreenOrientation.Tablet -> LandingScreenTablet(
@@ -188,7 +187,7 @@ fun LandingScreenPreview() {
 @Preview(device = "spec:parent=pixel_5,orientation=landscape")
 @Composable
 fun LandingScreenPreviewLandscape() {
-    NoteMarkTheme(darkTheme = true) {
+    NoteMarkTheme {
         LandingScreenLandscape(
             onSignInClick = {},
             onSignUpClick = {}
@@ -199,7 +198,7 @@ fun LandingScreenPreviewLandscape() {
 @Preview(device = "spec:width=1280dp,height=800dp,dpi=240")
 @Composable
 fun LandingScreenPreviewTablet() {
-    NoteMarkTheme(darkTheme = true) {
+    NoteMarkTheme {
         LandingScreenTablet(
             onSignInClick = {},
             onSignUpClick = {}

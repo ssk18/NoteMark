@@ -12,9 +12,10 @@ class SessionStorageImpl(
     private val dataStore: DataStore<Preferences>
 ) : SessionStorage {
 
-    private object PreferencesKeys {
+    companion object PreferencesKeys {
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        val USERNAME = stringPreferencesKey("username")
     }
 
     override suspend fun getAccessToken(): String? {
@@ -46,6 +47,18 @@ class SessionStorageImpl(
             preferences[PreferencesKeys.ACCESS_TOKEN] = accessToken
             preferences[PreferencesKeys.REFRESH_TOKEN] = refreshToken
         }
+    }
+
+    override suspend fun saveUsername(username: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.USERNAME] = username
+        }
+    }
+
+    override suspend fun getUsername(): String {
+        return dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.USERNAME]
+        }.first().toString()
     }
 
     override suspend fun clearTokens() {

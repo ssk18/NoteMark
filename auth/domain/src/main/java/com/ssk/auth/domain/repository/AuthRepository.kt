@@ -11,4 +11,8 @@ interface AuthRepository {
     ): EmptyResult<DataError.Network>
 
     suspend fun login(email: String, password: String): EmptyResult<DataError.Network>
+
+    suspend fun saveUsername(username: String)
+
+    suspend fun getUsername(): String
 }

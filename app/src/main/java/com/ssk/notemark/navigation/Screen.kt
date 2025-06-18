@@ -13,4 +13,7 @@ data object Register : NavKey
 data object Login : NavKey
 
 @Serializable
-data object BlankScreen : NavKey
+data object NotesList : NavKey
+
+@Serializable
+data class NoteDetail(val noteId: String) : NavKey

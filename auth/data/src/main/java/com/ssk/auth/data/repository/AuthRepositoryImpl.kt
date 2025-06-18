@@ -12,6 +12,8 @@ import com.ssk.core.domain.Result
 import com.ssk.core.domain.SessionStorage
 import com.ssk.core.domain.asEmptyDataResult
 import io.ktor.client.HttpClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AuthRepositoryImpl(
     private val httpClient: HttpClient,
@@ -37,7 +39,7 @@ class AuthRepositoryImpl(
         email: String,
         password: String
     ): EmptyResult<DataError.Network> {
-        val result =  httpClient.post<LoginRequest, LoginResponse>(
+        val result = httpClient.post<LoginRequest, LoginResponse>(
             route = Routes.LOGIN,
             body = LoginRequest(
                 email = email,
@@ -51,6 +53,18 @@ class AuthRepositoryImpl(
             )
         }
         return result.asEmptyDataResult()
+    }
+
+    override suspend fun saveUsername(username: String) {
+        withContext(Dispatchers.IO) {
+            sessionStorage.saveUsername(username)
+        }
+    }
+
+    override suspend fun getUsername(): String {
+        return withContext(Dispatchers.IO) {
+            sessionStorage.getUsername()
+        }
     }
 
 }

@@ -5,4 +5,6 @@ object Routes {
     const val REGISTATION = "/api/auth/register"
     const val LOGIN = "/api/auth/login"
     const val TOKEN_REFRESH = "/api/auth/refresh"
+    const val CREATE_NOTE = "/api/notes"
+    const val GET_NOTES = "/api/notes"
 }

@@ -151,6 +151,7 @@ class RegistrationViewModel(
                             snackbarType = SnackbarType.Success
                         )
                     }
+                    authRepository.saveUsername(username = _state.value.username)
                     _eventChannel.send(RegisterEvent.RegistrationSuccess)
                 }
             }

@@ -6,5 +6,7 @@ interface SessionStorage {
     suspend fun getRefreshToken(): String?
     suspend fun saveRefreshToken(token: String)
     suspend fun saveTokens(accessToken: String, refreshToken: String)
+    suspend fun saveUsername(username: String)
+    suspend fun getUsername(): String
     suspend fun clearTokens()
 }

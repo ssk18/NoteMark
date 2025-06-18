@@ -46,7 +46,10 @@ dependencies {
     implementation(projects.core.presentation.ui)
     implementation(projects.core.data)
     implementation(projects.core.domain)
+    implementation(projects.core.database)
     implementation(projects.auth.data)
     implementation(projects.auth.domain)
-
+    implementation(projects.notes.presentation)
+    implementation(projects.notes.data)
+    implementation(projects.notes.domain)
 }

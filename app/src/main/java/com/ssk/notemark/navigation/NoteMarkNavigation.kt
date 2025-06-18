@@ -13,6 +13,8 @@ import com.ssk.auth.presentation.BlankScreen
 import com.ssk.auth.presentation.landingscreen.LandingScreen
 import com.ssk.auth.presentation.loginscreen.LoginScreenRoot
 import com.ssk.auth.presentation.registrationscreen.RegistrationScreenRoot
+import com.ssk.notes.presentation.notelistscreen.NotesListScreen
+import com.ssk.notes.presentation.notelistscreen.NotesListScreenRoot
 
 @Composable
 fun NoteMarkNavigation(
@@ -76,17 +78,19 @@ fun NoteMarkNavigation(
                             },
                             onLoginSuccess = {
                                 backStack.clear()
-                                backStack.add(BlankScreen)
+                                backStack.add(NotesList)
                             }
                         )
                     }
                 }
 
-                BlankScreen -> {
+                NotesList -> {
                     NavEntry(
                         key = key
                     ) {
-                        BlankScreen(modifier = modifier)
+                        NotesListScreenRoot(
+                            modifier = modifier
+                        )
                     }
                 }
 

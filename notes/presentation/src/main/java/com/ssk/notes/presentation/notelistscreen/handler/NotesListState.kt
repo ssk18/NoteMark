@@ -1,6 +1,6 @@
 package com.ssk.notes.presentation.notelistscreen.handler
 
-import com.ssk.notes.domain.models.Note
+import com.ssk.core.domain.notes.Note
 
 data class NotesListState(
     val userInitials: String = "",

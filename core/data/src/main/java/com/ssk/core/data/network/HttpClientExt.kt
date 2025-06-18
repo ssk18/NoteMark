@@ -5,6 +5,7 @@ import com.ssk.core.domain.DataError
 import com.ssk.core.domain.Result
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
@@ -21,6 +22,24 @@ suspend inline fun <reified Request, reified Response : Any> HttpClient.post(
         post {
             url(constructRoute(route))
             setBody(body)
+        }
+    }
+}
+
+suspend inline fun <reified Response : Any> HttpClient.get(
+    route: String,
+    queryParams: Map<String, String> = emptyMap()
+): Result<Response, DataError.Network> {
+    return safeCall {
+        get {
+            val baseUrl = constructRoute(route)
+            val urlWithParams = if (queryParams.isNotEmpty()) {
+                val params = queryParams.entries.joinToString("&") { "${it.key}=${it.value}" }
+                "$baseUrl?$params"
+            } else {
+                baseUrl
+            }
+            url(urlWithParams)
         }
     }
 }

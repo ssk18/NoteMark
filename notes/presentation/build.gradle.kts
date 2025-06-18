@@ -9,5 +9,6 @@ android {
 dependencies {
     implementation(projects.core.domain)
     implementation(projects.notes.domain)
+    implementation(projects.auth.domain)
     implementation(libs.timber)
 }
