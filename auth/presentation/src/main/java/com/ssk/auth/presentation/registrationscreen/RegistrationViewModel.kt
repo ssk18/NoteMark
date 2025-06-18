@@ -2,8 +2,8 @@ package com.ssk.auth.presentation.registrationscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssk.auth.presentation.R
 import com.ssk.auth.domain.repository.AuthRepository
+import com.ssk.auth.presentation.R
 import com.ssk.auth.presentation.registrationscreen.handler.RegisterEvent
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenAction
 import com.ssk.auth.presentation.registrationscreen.handler.RegistrationScreenState

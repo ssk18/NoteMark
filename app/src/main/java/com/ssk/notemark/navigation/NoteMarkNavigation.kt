@@ -13,8 +13,8 @@ import com.ssk.auth.presentation.BlankScreen
 import com.ssk.auth.presentation.landingscreen.LandingScreen
 import com.ssk.auth.presentation.loginscreen.LoginScreenRoot
 import com.ssk.auth.presentation.registrationscreen.RegistrationScreenRoot
-import com.ssk.notes.presentation.notelistscreen.NotesListScreen
 import com.ssk.notes.presentation.notelistscreen.NotesListScreenRoot
+import timber.log.Timber
 
 @Composable
 fun NoteMarkNavigation(
@@ -89,6 +89,20 @@ fun NoteMarkNavigation(
                         key = key
                     ) {
                         NotesListScreenRoot(
+                            modifier = modifier,
+                            navigateToNoteDetail = {
+                                backStack.add(NoteDetail(it))
+                            }
+                        )
+                    }
+                }
+
+                is NoteDetail -> {
+                    NavEntry(
+                        key = key
+                    ) {
+                        Timber.d("NoteDetail: ${key.noteId}")
+                        BlankScreen(
                             modifier = modifier
                         )
                     }

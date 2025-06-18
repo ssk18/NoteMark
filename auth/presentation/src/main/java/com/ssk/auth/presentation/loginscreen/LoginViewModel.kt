@@ -2,8 +2,8 @@ package com.ssk.auth.presentation.loginscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssk.auth.presentation.R
 import com.ssk.auth.domain.repository.AuthRepository
+import com.ssk.auth.presentation.R
 import com.ssk.auth.presentation.loginscreen.handler.LoginAction
 import com.ssk.auth.presentation.loginscreen.handler.LoginEvent
 import com.ssk.auth.presentation.loginscreen.handler.LoginState

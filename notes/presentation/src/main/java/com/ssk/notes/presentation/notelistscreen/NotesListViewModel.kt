@@ -6,10 +6,14 @@ import com.ssk.auth.domain.repository.AuthRepository
 import com.ssk.core.domain.Result
 import com.ssk.core.domain.notes.Note
 import com.ssk.core.domain.notes.NotesRepository
+import com.ssk.core.presentation.ui.asUiText
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListAction
+import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +23,6 @@ import java.util.UUID
 class NotesListViewModel(
     private val authRepository: AuthRepository,
     private val notesRepository: NotesRepository,
-   // private val onNavigateToNoteDetail: (String) -> Unit = {}
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NotesListState())
@@ -32,6 +35,9 @@ class NotesListViewModel(
             started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
             initialValue = NotesListState()
         )
+
+    private val _eventChannel = Channel<NotesListEvents>()
+    val eventChannel = _eventChannel.receiveAsFlow()
 
     fun onAction(action: NotesListAction) {
         when (action) {
@@ -80,13 +86,21 @@ class NotesListViewModel(
             val result = notesRepository.createNote(newNote)
             
             when (result) {
-              //  is Result.Success -> onNavigateToNoteDetail(noteId)
-                is Result.Error -> {
-                    // Handle error - could show a snackbar or log
+                is Result.Success -> {
+                    _eventChannel.send(NotesListEvents.NavigateToNoteDetail(newNote.id))
                 }
-                else -> {}
+                is Result.Error -> {
+                    _eventChannel.send(NotesListEvents.ShowError(result.error.asUiText()))
+                }
             }
         }
     }
+
+//    private fun getNotes() {
+//        viewModelScope.launch {
+//            val notes = notesRepository.
+//            _state.update { it.copy(notes = notes) }
+//        }
+//    }
 
 }
