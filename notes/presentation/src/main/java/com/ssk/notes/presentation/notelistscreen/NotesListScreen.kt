@@ -89,7 +89,7 @@ fun NotesListScreen(
         ) {
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalItemSpacing = 12.dp
             ) {
@@ -119,14 +119,14 @@ fun NotesListScreenPreview() {
                     Note(
                         id = "1",
                         title = "title",
-                        content = "content",
+                        content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V",
                         createdAt = "2025-06-18T13:55:01.503656Z",
                         lastEditedAt = "2025-06-18T13:55:01.503656Z"
                     ),
                     Note(
                         id = "2",
                         title = "title",
-                        content = "content",
+                        content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V",
                         createdAt = "2025-06-18T13:55:01.503656Z",
                         lastEditedAt = "2025-06-18T13:55:01.503656Z"
                     ),

@@ -12,10 +12,10 @@ import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.UUID
@@ -26,7 +26,12 @@ class NotesListViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NotesListState())
-    val state = _state
+    val state = combine(
+        _state,
+        notesRepository.getNotes()
+    ) { state, notes ->
+        state.copy(notes = notes)
+    }
         .onStart {
             getUsername()
         }
@@ -46,7 +51,8 @@ class NotesListViewModel(
         }
     }
 
-    fun getUsername() {
+
+    private fun getUsername() {
         viewModelScope.launch {
             val fullName = authRepository.getUsername()
             val username = fullName.split(" ").filter { it.isNotEmpty() }
@@ -66,7 +72,7 @@ class NotesListViewModel(
 
                 else -> "??"
             }
-            _state.update { it.copy(userInitials = initials) }
+            _state.value = _state.value.copy(userInitials = initials)
         }
     }
 
@@ -74,7 +80,7 @@ class NotesListViewModel(
         viewModelScope.launch {
             val noteId = UUID.randomUUID().toString()
             val currentTime = Instant.now().toString()
-            
+
             val newNote = Note(
                 id = noteId,
                 title = "New Note",
@@ -82,13 +88,14 @@ class NotesListViewModel(
                 createdAt = currentTime,
                 lastEditedAt = currentTime
             )
-            
+
             val result = notesRepository.createNote(newNote)
-            
+
             when (result) {
                 is Result.Success -> {
                     _eventChannel.send(NotesListEvents.NavigateToNoteDetail(newNote.id))
                 }
+
                 is Result.Error -> {
                     _eventChannel.send(NotesListEvents.ShowError(result.error.asUiText()))
                 }

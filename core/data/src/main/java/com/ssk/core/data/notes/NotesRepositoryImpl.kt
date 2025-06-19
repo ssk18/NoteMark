@@ -10,6 +10,7 @@ import com.ssk.core.domain.notes.NotesRepository
 import com.ssk.core.domain.notes.RemoteNotesDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 
 class NotesRepositoryImpl(
     private val localNotesDataSource: LocalNotesDataSource,
@@ -38,5 +39,25 @@ class NotesRepositoryImpl(
                 }.await()
             }
         }
+    }
+
+    override suspend fun fetchNotes(): EmptyResult<DataError> {
+        return Result.Success(Unit)
+//        val note = remoteNotesDataSource.getNotes().map { paginatedNotes ->
+//            paginatedNotes.notes.map { it }
+//        }.asEmptyDataResult()
+//
+//        return when (val result = remoteNotesDataSource.getNotes()) {
+//            is Result.Error -> result.asEmptyDataResult()
+//            is Result.Success -> {
+//                applicationScope.async {
+//                    localNotesDataSource.upsertNote(note).asEmptyDataResult()
+//                }.await()
+//            }
+//        }
+    }
+
+    override fun getNotes(): Flow<List<Note>> {
+        return localNotesDataSource.getNotes()
     }
 }

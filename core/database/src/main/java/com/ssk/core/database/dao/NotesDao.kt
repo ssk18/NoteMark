@@ -1,13 +1,18 @@
 package com.ssk.core.database.dao
 
 import androidx.room.Dao
+import androidx.room.Query
 import androidx.room.Upsert
 import com.ssk.core.database.entity.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotesDao {
 
     @Upsert
     suspend fun createNote(note: NoteEntity)
+
+    @Query("SELECT * FROM notes ORDER BY createdAt DESC")
+    fun getNotes(): Flow<List<NoteEntity>>
 
 }

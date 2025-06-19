@@ -2,16 +2,19 @@ package com.ssk.core.database
 
 import android.database.sqlite.SQLiteFullException
 import com.ssk.core.database.dao.NotesDao
+import com.ssk.core.database.entity.toNote
 import com.ssk.core.database.entity.toNoteEntity
 import com.ssk.core.domain.DataError
 import com.ssk.core.domain.Result
 import com.ssk.core.domain.notes.LocalNotesDataSource
 import com.ssk.core.domain.notes.Note
 import com.ssk.core.domain.notes.NoteId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class RoomLocalNotesDataSource(
     private val notesDao: NotesDao
-): LocalNotesDataSource {
+) : LocalNotesDataSource {
     override suspend fun upsertNote(note: Note): Result<NoteId, DataError.Local> {
         return try {
             val noteEntity = note.toNoteEntity()
@@ -20,5 +23,12 @@ class RoomLocalNotesDataSource(
         } catch (e: SQLiteFullException) {
             Result.Error(DataError.Local.DISK_FULL)
         }
+    }
+
+    override fun getNotes(): Flow<List<Note>> {
+        return notesDao.getNotes()
+            .map { notes ->
+                notes.map { it.toNote() }
+            }
     }
 }
