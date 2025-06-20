@@ -23,7 +23,6 @@ fun NoteMarkTheme(
     content: @Composable () -> Unit,
 ) {
     val colorScheme = LightColorScheme
-    SetStatusBarIconsColor(false)
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,

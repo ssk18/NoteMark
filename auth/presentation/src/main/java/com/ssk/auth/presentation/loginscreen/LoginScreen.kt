@@ -22,6 +22,7 @@ import com.ssk.auth.presentation.loginscreen.handler.LoginState
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.components.NoteMarkSnackBar
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.core.presentation.designsystem.theme.SetStatusBarIconsColor
 import com.ssk.core.presentation.ui.LocalScreenOrientation
 import com.ssk.core.presentation.ui.ObserveAsEvents
 import com.ssk.core.presentation.ui.ScreenOrientation
@@ -37,6 +38,7 @@ fun LoginScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    SetStatusBarIconsColor(false)
 
     ObserveAsEvents(viewModel.eventChannel) { event ->
         when (event) {

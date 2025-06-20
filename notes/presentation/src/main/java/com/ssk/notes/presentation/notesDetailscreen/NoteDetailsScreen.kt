@@ -10,14 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.stringResource
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.expandWidth
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
@@ -55,6 +55,7 @@ fun NoteDetailsScreenRoot(
                 viewModel.onAction(NoteDetailsAction.OnDismissDialog)
             },
             onConfirm = {
+                viewModel.onAction(NoteDetailsAction.OnDismissDialog)
                 navigateToNotesList()
             }
         )
@@ -73,6 +74,7 @@ fun NoteDetailsScreen(
     noteDetailState: NoteDetailState,
     onAction: (NoteDetailsAction) -> Unit
 ) {
+    SetStatusBarIconsColor(true)
     NoteMarkScaffold(
         modifier = modifier,
         topBar = {
