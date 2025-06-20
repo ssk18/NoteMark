@@ -6,6 +6,7 @@ import com.ssk.core.domain.Result
 import com.ssk.core.domain.asEmptyDataResult
 import com.ssk.core.domain.notes.LocalNotesDataSource
 import com.ssk.core.domain.notes.Note
+import com.ssk.core.domain.notes.NoteId
 import com.ssk.core.domain.notes.NotesRepository
 import com.ssk.core.domain.notes.RemoteNotesDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -59,5 +60,13 @@ class NotesRepositoryImpl(
 
     override fun getNotes(): Flow<List<Note>> {
         return localNotesDataSource.getNotes()
+    }
+
+    override fun getNoteById(id: NoteId): Flow<Note> {
+        return localNotesDataSource.getNoteById(id)
+    }
+
+    override suspend fun updateNote(note: Note): EmptyResult<DataError> {
+        return localNotesDataSource.upsertNote(note).asEmptyDataResult()
     }
 }

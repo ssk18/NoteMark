@@ -7,7 +7,7 @@ import com.ssk.core.data.di.coreDataModule
 import com.ssk.core.database.di.coreDatabaseModule
 import com.ssk.notemark.di.appModule
 import com.ssk.notes.data.di.remoteNotesDataModule
-import com.ssk.notes.presentation.notelistscreen.notesViewModelModule
+import com.ssk.notes.presentation.di.notesViewModelModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext

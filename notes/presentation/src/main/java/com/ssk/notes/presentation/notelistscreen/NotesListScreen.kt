@@ -1,6 +1,7 @@
 package com.ssk.notes.presentation.notelistscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -100,7 +101,10 @@ fun NotesListScreen(
                     NoteCard(
                         createdAt = note.createdAt,
                         title = note.title,
-                        content = note.content
+                        content = note.content,
+                        modifier = Modifier.clickable {
+                            onAction(NotesListAction.OnNoteClicked(note))
+                        }
                     )
                 }
             }

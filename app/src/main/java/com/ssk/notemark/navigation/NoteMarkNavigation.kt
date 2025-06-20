@@ -14,6 +14,10 @@ import com.ssk.auth.presentation.landingscreen.LandingScreen
 import com.ssk.auth.presentation.loginscreen.LoginScreenRoot
 import com.ssk.auth.presentation.registrationscreen.RegistrationScreenRoot
 import com.ssk.notes.presentation.notelistscreen.NotesListScreenRoot
+import com.ssk.notes.presentation.notesDetailscreen.NoteDetailsScreen
+import com.ssk.notes.presentation.notesDetailscreen.NoteDetailsScreenRoot
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
 @Composable
@@ -102,8 +106,15 @@ fun NoteMarkNavigation(
                         key = key
                     ) {
                         Timber.d("NoteDetail: ${key.noteId}")
-                        BlankScreen(
-                            modifier = modifier
+                        NoteDetailsScreenRoot(
+                            modifier = modifier,
+                            viewModel = koinViewModel {
+                                parametersOf(key.noteId)
+                            },
+                            navigateToNotesList = {
+                                backStack.removeLastOrNull()
+                                backStack.add(NotesList)
+                            }
                         )
                     }
                 }

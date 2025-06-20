@@ -31,4 +31,8 @@ class RoomLocalNotesDataSource(
                 notes.map { it.toNote() }
             }
     }
+
+    override fun getNoteById(id: NoteId): Flow<Note> {
+        return notesDao.getNoteById(id).map { it.toNote() }
+    }
 }

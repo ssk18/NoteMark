@@ -47,7 +47,9 @@ class NotesListViewModel(
     fun onAction(action: NotesListAction) {
         when (action) {
             NotesListAction.OnAddNoteClicked -> createNote()
-            is NotesListAction.OnNoteClicked -> TODO()
+            is NotesListAction.OnNoteClicked -> {
+                _eventChannel.trySend(NotesListEvents.NavigateToNoteDetail(action.note.id))
+            }
         }
     }
 

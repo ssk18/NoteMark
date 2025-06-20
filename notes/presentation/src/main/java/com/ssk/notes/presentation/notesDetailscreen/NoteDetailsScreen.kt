@@ -7,18 +7,47 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.getValue
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.expandWidth
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.core.presentation.ui.ObserveAsEvents
 import com.ssk.notes.presentation.notesDetailscreen.components.NoteDetailsTopBar
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailState
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsAction
+import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsEvent
+import org.koin.androidx.compose.koinViewModel
+
+@Composable
+fun NoteDetailsScreenRoot(
+    modifier: Modifier = Modifier,
+    viewModel: NoteDetailsViewModel = koinViewModel(),
+    navigateToNotesList: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    ObserveAsEvents(viewModel.eventChannel) { event ->
+        when (event) {
+            NoteDetailsEvent.NavigateToNotesList -> navigateToNotesList()
+            is NoteDetailsEvent.ShowError -> TODO()
+        }
+    }
+
+    NoteDetailsScreen(
+        modifier = modifier,
+        noteDetailState = state,
+        onAction = viewModel::onAction
+    )
+}
 
 @Composable
 fun NoteDetailsScreen(
@@ -46,24 +75,42 @@ fun NoteDetailsScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 16.dp ),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                text = noteDetailState.title,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
+            TextField(
+                value = noteDetailState.title,
+                onValueChange = {
+                    onAction(NoteDetailsAction.OnTitleChanged(it))
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                textStyle = MaterialTheme.typography.titleLarge
             )
             HorizontalDivider(
                 modifier = Modifier
                     .expandWidth(16.dp),
                 color = MaterialTheme.colorScheme.surface
             )
-            Text(
-                text = noteDetailState.content,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+            TextField(
+                value = noteDetailState.content,
+                onValueChange = {
+                    onAction(NoteDetailsAction.OnContentChanged(it))
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                textStyle = MaterialTheme.typography.bodyLarge,
             )
         }
     }
