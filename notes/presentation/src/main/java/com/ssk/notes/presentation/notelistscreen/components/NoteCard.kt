@@ -31,7 +31,7 @@ fun NoteCard(
         modifier = modifier
             .wrapContentWidth()
             .wrapContentHeight()
-            .padding(12.dp)
+            .padding(8.dp)
             .shadow(
                 elevation = 8.dp,
                 spotColor = MaterialTheme.colorScheme.onSurface,

@@ -17,10 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.expandWidth
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.core.presentation.designsystem.theme.SetStatusBarIconsColor
 import com.ssk.core.presentation.ui.ObserveAsEvents
+import com.ssk.notes.presentation.R
+import com.ssk.notes.presentation.notesDetailscreen.components.NoteDetailsAlertDialog
 import com.ssk.notes.presentation.notesDetailscreen.components.NoteDetailsTopBar
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailState
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsAction
@@ -34,12 +38,26 @@ fun NoteDetailsScreenRoot(
     navigateToNotesList: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    SetStatusBarIconsColor(true)
 
     ObserveAsEvents(viewModel.eventChannel) { event ->
         when (event) {
             NoteDetailsEvent.NavigateToNotesList -> navigateToNotesList()
             is NoteDetailsEvent.ShowError -> TODO()
         }
+    }
+
+    if (state.showDialog) {
+        NoteDetailsAlertDialog(
+            dialogTitle = stringResource(R.string.discard_changes),
+            dialogMessage = stringResource(R.string.you_have_unsaved_changes_if_you_discard_now_all_changes_wil_be_lost),
+            onDismiss = {
+                viewModel.onAction(NoteDetailsAction.OnDismissDialog)
+            },
+            onConfirm = {
+                navigateToNotesList()
+            }
+        )
     }
 
     NoteDetailsScreen(

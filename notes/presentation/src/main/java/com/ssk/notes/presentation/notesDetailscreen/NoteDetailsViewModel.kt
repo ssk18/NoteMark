@@ -38,7 +38,7 @@ class NoteDetailsViewModel(
     fun onAction(action: NoteDetailsAction) {
         when (action) {
             NoteDetailsAction.OnCloseNoteClicked -> {
-                _eventChannel.trySend(NoteDetailsEvent.NavigateToNotesList)
+                _state.update { it.copy(showDialog = true) }
             }
             is NoteDetailsAction.OnContentChanged -> {
                 _state.update {
@@ -50,6 +50,10 @@ class NoteDetailsViewModel(
                 _state.update {
                     it.copy(title = action.title)
                 }
+            }
+
+            NoteDetailsAction.OnDismissDialog -> {
+                _state.update { it.copy(showDialog = false) }
             }
         }
     }

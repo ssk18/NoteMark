@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notemark">NoteMark</string>
+    <string name="discard_changes">Discard Changes?</string>
+    <string name="you_have_unsaved_changes_if_you_discard_now_all_changes_wil_be_lost">You have unsaved changes. If you discard now, all changes wil be lost.</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
 </resources>
