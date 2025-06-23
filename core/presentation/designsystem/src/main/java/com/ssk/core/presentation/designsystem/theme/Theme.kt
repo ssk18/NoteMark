@@ -1,6 +1,7 @@
 package com.ssk.core.presentation.designsystem.theme
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -40,14 +41,8 @@ fun SetStatusBarIconsColor(darkIcons: Boolean) {
             ?.let { WindowCompat.getInsetsController(it, it.decorView) }
     }
 
-    DisposableEffect(true) {
-        val originalAppearance = insetsController?.isAppearanceLightStatusBars
+    DisposableEffect(darkIcons) {
         insetsController?.isAppearanceLightStatusBars = darkIcons
-
-        onDispose {
-            originalAppearance?.let {
-                insetsController.isAppearanceLightStatusBars = it
-            }
-        }
+        onDispose { }
     }
 }

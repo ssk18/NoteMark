@@ -74,7 +74,6 @@ fun NoteDetailsScreen(
     noteDetailState: NoteDetailState,
     onAction: (NoteDetailsAction) -> Unit
 ) {
-    SetStatusBarIconsColor(true)
     NoteMarkScaffold(
         modifier = modifier,
         topBar = {
