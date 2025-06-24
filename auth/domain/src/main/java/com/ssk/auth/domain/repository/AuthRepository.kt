@@ -15,4 +15,6 @@ interface AuthRepository {
     suspend fun saveUsername(username: String)
 
     suspend fun getUsername(): String
+    
+    suspend fun isLoggedIn(): Boolean
 }

@@ -67,4 +67,11 @@ class AuthRepositoryImpl(
         }
     }
 
+    override suspend fun isLoggedIn(): Boolean {
+        return withContext(Dispatchers.IO) {
+            val accessToken = sessionStorage.getAccessToken()
+            !accessToken.isNullOrEmpty()
+        }
+    }
+
 }

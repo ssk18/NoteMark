@@ -1,35 +1,24 @@
 package com.ssk.notes.presentation.notelistscreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ssk.core.domain.notes.Note
-import com.ssk.core.presentation.designsystem.components.NoteMarkFab
-import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
-import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
 import com.ssk.core.presentation.designsystem.theme.SetStatusBarIconsColor
+import com.ssk.core.presentation.ui.LocalScreenOrientation
 import com.ssk.core.presentation.ui.ObserveAsEvents
-import com.ssk.notes.presentation.notelistscreen.components.NoteCard
-import com.ssk.notes.presentation.notelistscreen.components.NotesListTopBar
+import com.ssk.core.presentation.ui.ScreenOrientation
+import com.ssk.notes.presentation.R
+import com.ssk.notes.presentation.notelistscreen.components.NoteDeleteDialog
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListAction
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
+import com.ssk.notes.presentation.notelistscreen.noteslistadaptivescreens.NotesListLandscapeScreen
+import com.ssk.notes.presentation.notelistscreen.noteslistadaptivescreens.NotesListPortraitScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -59,6 +48,15 @@ fun NotesListScreenRoot(
         notesListState = state,
         onAction = viewModel::onAction
     )
+
+    if (state.showDeleteDialog) {
+        NoteDeleteDialog(
+            title = stringResource(R.string.delete_note),
+            content = stringResource(R.string.are_you_sure_you_want_to_delete_this_note),
+            onDismiss = { viewModel.onAction(NotesListAction.OnDialogDismiss) },
+            onConfirm = { viewModel.onAction(NotesListAction.OnDeleteNoteConfirmed) }
+        )
+    }
 }
 
 @Composable
@@ -67,76 +65,27 @@ fun NotesListScreen(
     notesListState: NotesListState,
     onAction: (NotesListAction) -> Unit
 ) {
-    NoteMarkScaffold(
-        modifier = modifier,
-        topBar = {
-            NotesListTopBar(notesListState = notesListState)
-        },
-        floatingActionButton = {
-            NoteMarkFab(
-                onClick = {
-                    onAction(NotesListAction.OnAddNoteClicked)
-                },
-                modifier = Modifier
-                    .padding(end = 12.dp, bottom = 12.dp)
-            )
-        }
-    ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onSurface)
-                .padding(it)
-        ) {
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize().padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalItemSpacing = 8.dp
-            ) {
-                items(
-                    items = notesListState.notes,
-                    key = { it.id }
-                ) { note ->
-                    NoteCard(
-                        createdAt = note.createdAt,
-                        title = note.title,
-                        content = note.content,
-                        modifier = Modifier.clickable {
-                            onAction(NotesListAction.OnNoteClicked(note))
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NotesListScreenPreview() {
-    NoteMarkTheme {
-        NotesListScreen(
-            notesListState = NotesListState(
-                userInitials = "SK",
-                notes = listOf(
-                    Note(
-                        id = "1",
-                        title = "title",
-                        content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V",
-                        createdAt = "2025-06-18T13:55:01.503656Z",
-                        lastEditedAt = "2025-06-18T13:55:01.503656Z"
-                    ),
-                    Note(
-                        id = "2",
-                        title = "title",
-                        content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V",
-                        createdAt = "2025-06-18T13:55:01.503656Z",
-                        lastEditedAt = "2025-06-18T13:55:01.503656Z"
-                    ),
-                ),
-            ),
-            onAction = {}
+    when (LocalScreenOrientation.current) {
+        ScreenOrientation.Portrait -> NotesListPortraitScreen(
+            modifier = modifier,
+            onAction = onAction,
+            notesListState = notesListState
         )
+
+        ScreenOrientation.Landscape -> NotesListLandscapeScreen(
+            modifier = modifier,
+            onAction = onAction,
+            notesListState = notesListState
+        )
+
+        ScreenOrientation.Tablet -> {
+//            RegistrationTabletContent(
+//                modifier = modifier,
+//                onAction = onAction,
+//                registrationState = registrationState,
+//                onValidate = onValidate,
+//                navigateToLogin = navigateToLogin
+//            )
+        }
     }
 }

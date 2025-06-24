@@ -1,7 +1,9 @@
 package com.ssk.notes.presentation.notelistscreen.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -29,15 +31,18 @@ fun NoteCard(
 ) {
     Card(
         modifier = modifier
-            .wrapContentWidth()
+            .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp)
+            .background(
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerLowest
+            )
             .shadow(
                 elevation = 8.dp,
                 spotColor = MaterialTheme.colorScheme.onSurface,
                 ambientColor = MaterialTheme.colorScheme.onSurface
             ),
-        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onPrimary
         )

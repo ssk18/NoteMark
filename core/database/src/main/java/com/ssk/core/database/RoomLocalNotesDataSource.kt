@@ -35,4 +35,8 @@ class RoomLocalNotesDataSource(
     override fun getNoteById(id: NoteId): Flow<Note> {
         return notesDao.getNoteById(id).map { it.toNote() }
     }
+
+    override suspend fun deleteNote(note: Note) {
+        notesDao.deleteNote(note.toNoteEntity())
+    }
 }

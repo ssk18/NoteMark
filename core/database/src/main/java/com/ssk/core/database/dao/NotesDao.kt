@@ -1,6 +1,7 @@
 package com.ssk.core.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.ssk.core.database.entity.NoteEntity
@@ -17,5 +18,8 @@ interface NotesDao {
 
     @Query("SELECT * FROM notes WHERE id = :id")
     fun getNoteById(id: String): Flow<NoteEntity>
+
+    @Delete
+    suspend fun deleteNote(note: NoteEntity)
 
 }

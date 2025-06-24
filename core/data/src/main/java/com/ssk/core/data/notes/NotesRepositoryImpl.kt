@@ -9,9 +9,11 @@ import com.ssk.core.domain.notes.Note
 import com.ssk.core.domain.notes.NoteId
 import com.ssk.core.domain.notes.NotesRepository
 import com.ssk.core.domain.notes.RemoteNotesDataSource
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class NotesRepositoryImpl(
     private val localNotesDataSource: LocalNotesDataSource,
@@ -66,7 +68,18 @@ class NotesRepositoryImpl(
         return localNotesDataSource.getNoteById(id)
     }
 
+    override suspend fun deleteNote(note: Note) {
+        localNotesDataSource.deleteNote(note)
+    }
+
     override suspend fun updateNote(note: Note): EmptyResult<DataError> {
-        return localNotesDataSource.upsertNote(note).asEmptyDataResult()
+        return try {
+            applicationScope.async {
+                localNotesDataSource.upsertNote(note).asEmptyDataResult()
+            }.await()
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            Result.Error(DataError.Local.DISK_FULL).asEmptyDataResult()
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.ssk.core.domain.notes.NotesRepository
 import com.ssk.core.presentation.ui.asUiText
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListAction
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents
+import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents.*
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.Instant
 import java.util.UUID
 
@@ -41,6 +44,8 @@ class NotesListViewModel(
             initialValue = NotesListState()
         )
 
+    private val noteId = MutableStateFlow<String>("")
+
     private val _eventChannel = Channel<NotesListEvents>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
@@ -48,7 +53,22 @@ class NotesListViewModel(
         when (action) {
             NotesListAction.OnAddNoteClicked -> createNote()
             is NotesListAction.OnNoteClicked -> {
-                _eventChannel.trySend(NotesListEvents.NavigateToNoteDetail(action.note.id))
+                _eventChannel.trySend(NavigateToNoteDetail(action.note.id))
+            }
+
+            is NotesListAction.OnDeleteNoteConfirmed -> {
+                Timber.d("Deleting note with id: ${noteId.value}")
+                deleteNote()
+                _state.update { it.copy(showDeleteDialog = !it.showDeleteDialog) }
+            }
+
+            is NotesListAction.OnLongPressNote -> {
+                noteId.value = action.noteId
+                _state.update { it.copy(showDeleteDialog = !it.showDeleteDialog) }
+            }
+
+            NotesListAction.OnDialogDismiss -> {
+                _state.update { it.copy(showDeleteDialog = false) }
             }
         }
     }
@@ -105,11 +125,22 @@ class NotesListViewModel(
         }
     }
 
-//    private fun getNotes() {
-//        viewModelScope.launch {
-//            val notes = notesRepository.
-//            _state.update { it.copy(notes = notes) }
-//        }
-//    }
+    private fun deleteNote() {
+        viewModelScope.launch {
+            val note = state.value.notes.find { it.id == noteId.value }
+            if (note == null) {
+                Timber.e("Note not found with id: ${noteId.value}")
+                return@launch
+            }
+            
+            Timber.d("Found note to delete: ${note.title} with id: ${note.id}")
+            try {
+                notesRepository.deleteNote(note)
+                Timber.d("Note deleted successfully")
+            } catch (e: Exception) {
+                Timber.e("Error deleting note: ${e.message}")
+            }
+        }
+    }
 
 }
