@@ -53,14 +53,14 @@ fun LoginPortraitContent(
                 .fillMaxWidth()
                 .padding(top = sheetHeight)
                 .background(
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
                     shape = RoundedCornerShape(
                         topStart = 20.dp,
                         topEnd = 20.dp
                     )
                 )
                 .fillMaxHeight()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 24.dp),
         ) {
             Text(
                 text = stringResource(R.string.log_in),

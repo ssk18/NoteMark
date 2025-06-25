@@ -1,10 +1,9 @@
 package com.ssk.core.presentation.ui
 
-import android.content.res.Configuration
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalConfiguration
 
 val LocalScreenOrientation = staticCompositionLocalOf<ScreenOrientation> {
     error("No orientation provided")
@@ -12,17 +11,15 @@ val LocalScreenOrientation = staticCompositionLocalOf<ScreenOrientation> {
 
 @Composable
 fun ProvideOrientation(content: @Composable () -> Unit) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    
-    // Simple tablet detection based on screen width
-    val screenWidthDp = configuration.screenWidthDp
-    val isTablet = screenWidthDp >= 600 // 600dp is commonly used threshold for tablets
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    val deviceConfiguration = DeviceConfiguration.fromWindowSizeClass(windowSizeClass)
 
-    val orientation = when {
-        isLandscape -> ScreenOrientation.Landscape
-        isTablet -> ScreenOrientation.Tablet
-        else -> ScreenOrientation.Portrait
+    val orientation = when (deviceConfiguration) {
+        DeviceConfiguration.MOBILE_PORTRAIT -> ScreenOrientation.Portrait
+        DeviceConfiguration.MOBILE_LANDSCAPE -> ScreenOrientation.Landscape
+        DeviceConfiguration.TABLET_PORTRAIT,
+        DeviceConfiguration.TABLET_LANDSCAPE,
+        DeviceConfiguration.DESKTOP -> ScreenOrientation.Tablet
     }
 
     CompositionLocalProvider(LocalScreenOrientation provides orientation) {

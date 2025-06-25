@@ -39,6 +39,7 @@ androidx-datastore = "1.1.7"
 work = "2.10.1"
 koin-annotations = "2.0.1-Beta1"
 ktorClientLogging = "3.1.3"
+adaptive = "1.1.1"
 
 # Project versions
 projectApplicationId = "com.ssk.notemark"
@@ -70,6 +71,7 @@ androidx-material-icons-extended = { group = "androidx.compose.material", name =
 accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
 
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }

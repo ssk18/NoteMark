@@ -10,4 +10,5 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.auth.domain)
     implementation(libs.timber)
+    implementation(libs.material3.adaptive)
 }

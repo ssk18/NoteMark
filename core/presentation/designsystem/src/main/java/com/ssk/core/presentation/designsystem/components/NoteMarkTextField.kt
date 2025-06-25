@@ -108,7 +108,7 @@ fun NoteMarkTextField(
                 )
             },
             isError = isError,
-            visualTransformation = if (isPassword && !isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if (isPassword && !isPasswordVisible) PasswordVisualTransformation(mask = '*') else VisualTransformation.None,
             trailingIcon = {
                 if (isPassword) {
                     Icon(

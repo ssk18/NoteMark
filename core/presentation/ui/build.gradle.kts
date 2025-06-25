@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.material3.adaptive)
 
     implementation(projects.core.domain)
     implementation(projects.core.presentation.designsystem)
