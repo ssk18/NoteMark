@@ -7,6 +7,7 @@ import com.ssk.auth.presentation.R
 import com.ssk.auth.presentation.loginscreen.handler.LoginAction
 import com.ssk.auth.presentation.loginscreen.handler.LoginEvent
 import com.ssk.auth.presentation.loginscreen.handler.LoginState
+import com.ssk.core.domain.DataError
 import com.ssk.core.domain.Result
 import com.ssk.core.presentation.designsystem.components.SnackbarType
 import com.ssk.core.presentation.ui.UiText
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val authRepository: AuthRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
@@ -35,12 +36,14 @@ class LoginViewModel(
                     it.copy(email = action.email, emailError = null)
                 }
             }
+
             LoginAction.OnLogin -> login()
             is LoginAction.OnPasswordChange -> {
                 _state.update {
                     it.copy(password = action.password, passwordError = null)
                 }
             }
+
             LoginAction.OnTogglePasswordVisibility -> {
                 _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
@@ -60,11 +63,16 @@ class LoginViewModel(
                 is Result.Error -> {
                     _state.update {
                         it.copy(
-                            snackbarType = SnackbarType.Error
+                            snackbarType = SnackbarType.Error,
                         )
                     }
-                    _eventChannel.send(LoginEvent.Error(loginResponse.error.asUiText()))
+                    if (loginResponse.error == DataError.Network.UNAUTHORIZED) {
+                        _eventChannel.send(LoginEvent.Error(UiText.StringResource(R.string.invalid_login_credentials)))
+                    } else {
+                        _eventChannel.send(LoginEvent.Error(loginResponse.error.asUiText()))
+                    }
                 }
+
                 is Result.Success -> {
                     _eventChannel.send(LoginEvent.LoginSuccess)
                 }

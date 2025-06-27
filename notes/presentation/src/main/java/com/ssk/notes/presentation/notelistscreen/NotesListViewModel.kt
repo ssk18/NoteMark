@@ -6,6 +6,7 @@ import com.ssk.auth.domain.repository.AuthRepository
 import com.ssk.core.domain.Result
 import com.ssk.core.domain.notes.Note
 import com.ssk.core.domain.notes.NotesRepository
+import com.ssk.core.presentation.ui.UiText
 import com.ssk.core.presentation.ui.asUiText
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListAction
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListEvents
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.Instant
 import java.util.UUID
+import kotlin.coroutines.cancellation.CancellationException
 
 class NotesListViewModel(
     private val authRepository: AuthRepository,
@@ -132,13 +134,17 @@ class NotesListViewModel(
                 Timber.e("Note not found with id: ${noteId.value}")
                 return@launch
             }
-            
-            Timber.d("Found note to delete: ${note.title} with id: ${note.id}")
             try {
                 notesRepository.deleteNote(note)
-                Timber.d("Note deleted successfully")
             } catch (e: Exception) {
-                Timber.e("Error deleting note: ${e.message}")
+                if (e is CancellationException) throw e
+                _eventChannel.send(
+                    NotesListEvents.ShowError(
+                        UiText.DynamicString(
+                            e.message ?: "Unknown error"
+                        )
+                    )
+                )
             }
         }
     }

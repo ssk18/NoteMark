@@ -69,23 +69,24 @@ fun NotesListScreen(
         ScreenOrientation.Portrait -> NotesListPortraitScreen(
             modifier = modifier,
             onAction = onAction,
-            notesListState = notesListState
+            notesListState = notesListState,
+            maxCharacters = 150
         )
 
         ScreenOrientation.Landscape -> NotesListLandscapeScreen(
             modifier = modifier,
             onAction = onAction,
-            notesListState = notesListState
+            notesListState = notesListState,
+            maxCharacters = 150
         )
 
         ScreenOrientation.Tablet -> {
-//            RegistrationTabletContent(
-//                modifier = modifier,
-//                onAction = onAction,
-//                registrationState = registrationState,
-//                onValidate = onValidate,
-//                navigateToLogin = navigateToLogin
-//            )
+            NotesListPortraitScreen(
+                modifier = modifier,
+                onAction = onAction,
+                notesListState = notesListState,
+                maxCharacters = 250
+            )
         }
     }
 }

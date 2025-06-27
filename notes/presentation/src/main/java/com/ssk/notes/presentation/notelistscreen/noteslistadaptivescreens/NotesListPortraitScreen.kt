@@ -18,6 +18,7 @@ import com.ssk.core.domain.notes.Note
 import com.ssk.core.presentation.designsystem.components.NoteMarkFab
 import com.ssk.core.presentation.designsystem.components.NoteMarkScaffold
 import com.ssk.core.presentation.designsystem.theme.NoteMarkTheme
+import com.ssk.notes.presentation.notelistscreen.components.EmptyNoteView
 import com.ssk.notes.presentation.notelistscreen.components.NoteCard
 import com.ssk.notes.presentation.notelistscreen.components.NotesListTopBar
 import com.ssk.notes.presentation.notelistscreen.handler.NotesListAction
@@ -27,6 +28,7 @@ import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
 fun NotesListPortraitScreen(
     modifier: Modifier = Modifier,
     notesListState: NotesListState,
+    maxCharacters: Int,
     onAction: (NotesListAction) -> Unit
 ) {
     NoteMarkScaffold(
@@ -50,27 +52,32 @@ fun NotesListPortraitScreen(
                 .background(MaterialTheme.colorScheme.onSurface)
                 .padding(it)
         ) {
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalItemSpacing = 8.dp
-            ) {
-                items(
-                    items = notesListState.notes,
-                    key = { it.id }
-                ) { note ->
-                    NoteCard(
-                        createdAt = note.createdAt,
-                        title = note.title,
-                        content = note.content,
-                        modifier = Modifier.combinedClickable(
-                            onClick = { onAction(NotesListAction.OnNoteClicked(note)) },
-                            onLongClick = { onAction(NotesListAction.OnLongPressNote(note.id)) }
+            if (notesListState.notes.isEmpty()) {
+                EmptyNoteView()
+            } else {
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(2),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalItemSpacing = 8.dp
+                ) {
+                    items(
+                        items = notesListState.notes,
+                        key = { it.id }
+                    ) { note ->
+                        NoteCard(
+                            createdAt = note.createdAt,
+                            title = note.title,
+                            content = note.content,
+                            maxCharacters = maxCharacters,
+                            modifier = Modifier.combinedClickable(
+                                onClick = { onAction(NotesListAction.OnNoteClicked(note)) },
+                                onLongClick = { onAction(NotesListAction.OnLongPressNote(note.id)) }
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -101,7 +108,8 @@ fun NotesListScreenPreview() {
                     ),
                 ),
             ),
-            onAction = {}
+            onAction = {},
+            maxCharacters = 150
         )
     }
 }

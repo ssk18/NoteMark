@@ -43,4 +43,6 @@
     
     <!-- Existing -->
     <string name="a_user_with_that_email_already_exists">A User with that email already exists</string>
+    <string name="invalid_login_credentials">Invalid login credentials</string>
+    <string name="invalid_email_provided">Invalid email provided</string>
 </resources>

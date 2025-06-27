@@ -28,6 +28,7 @@ fun NoteCard(
     createdAt: String,
     title: String,
     content: String,
+    maxCharacters: Int
 ) {
     Card(
         modifier = modifier
@@ -63,9 +64,11 @@ fun NoteCard(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2
             )
             Text(
-                text = content.take(150),
+                text = content.take(maxCharacters),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis
@@ -81,7 +84,8 @@ fun NoteCardPreview() {
         NoteCard(
             createdAt = "2025-06-18T13:55:01.503656Z",
             title = "Title",
-            content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V"
+            content = "Lets build beautiful apps with compose fsfaf afafswgwsgb afastfgwrgvgwrfdgq fsafafaf afwafafvqaeFVQWEFVCWADVFCWWSFDVS  ASFWSAV SDFWSFGBVWSFB V",
+            maxCharacters = 150
         )
     }
 }

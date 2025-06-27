@@ -22,7 +22,7 @@ fun NoteMarkScaffold(
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         snackbarHost = snackBar,
-       // contentWindowInsets = WindowInsets.statusBars
+        contentWindowInsets = WindowInsets.statusBars
     ) { padding ->
         content(padding)
     }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -46,7 +47,7 @@ fun NoteDetailsPortraitScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp ),
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -62,7 +63,13 @@ fun NoteDetailsPortraitScreen(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = MaterialTheme.typography.titleLarge
+                textStyle = MaterialTheme.typography.titleLarge,
+                placeholder = {
+                    Text(
+                        text = "Note Title",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -82,6 +89,12 @@ fun NoteDetailsPortraitScreen(
                     unfocusedIndicatorColor = Color.Transparent
                 ),
                 textStyle = MaterialTheme.typography.bodyLarge,
+                placeholder = {
+                    Text(
+                        text = "Tap to enter note content",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             )
         }
     }

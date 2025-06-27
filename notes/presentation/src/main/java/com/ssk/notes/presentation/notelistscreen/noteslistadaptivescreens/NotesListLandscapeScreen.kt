@@ -27,6 +27,7 @@ import com.ssk.notes.presentation.notelistscreen.handler.NotesListState
 fun NotesListLandscapeScreen(
     modifier: Modifier = Modifier,
     notesListState: NotesListState,
+    maxCharacters: Int,
     onAction: (NotesListAction) -> Unit
 ) {
     NoteMarkScaffold(
@@ -66,6 +67,7 @@ fun NotesListLandscapeScreen(
                         createdAt = note.createdAt,
                         title = note.title,
                         content = note.content,
+                        maxCharacters = maxCharacters,
                         modifier = Modifier.clickable {
                             onAction(NotesListAction.OnNoteClicked(note))
                         }
@@ -100,7 +102,8 @@ fun NotesListLandscapeScreenPreview() {
                     ),
                 ),
             ),
-            onAction = {}
+            onAction = {},
+            maxCharacters = 150
         )
     }
 }

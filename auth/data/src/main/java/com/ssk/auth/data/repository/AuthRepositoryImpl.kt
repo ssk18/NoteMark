@@ -26,7 +26,7 @@ class AuthRepositoryImpl(
         username: String
     ): EmptyResult<DataError.Network> {
         return httpClient.post<RegisterDto, Unit>(
-            route = Routes.REGISTATION,
+            route = Routes.REGISTRATION,
             body = RegisterDto(
                 email = email,
                 password = password,
@@ -51,6 +51,7 @@ class AuthRepositoryImpl(
                 accessToken = result.data.accessToken,
                 refreshToken = result.data.refreshToken
             )
+            saveUsername(result.data.username)
         }
         return result.asEmptyDataResult()
     }
