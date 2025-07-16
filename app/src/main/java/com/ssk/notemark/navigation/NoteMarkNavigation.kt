@@ -17,6 +17,7 @@ import com.ssk.auth.presentation.registrationscreen.RegistrationScreenRoot
 import com.ssk.notemark.MainViewModel
 import com.ssk.notes.presentation.notelistscreen.NotesListScreenRoot
 import com.ssk.notes.presentation.notesDetailscreen.NoteDetailsScreenRoot
+import com.ssk.notes.presentation.notessettingscreen.NotesSettingsScreenRoot
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -27,11 +28,11 @@ fun NoteMarkNavigation(
 ) {
     val mainViewModel: MainViewModel = koinViewModel()
     val mainState by mainViewModel.state.collectAsStateWithLifecycle()
-    
+
     if (mainState.isLoading) {
         return // Splash screen will be shown by MainActivity
     }
-    
+
     val initialScreen = if (mainState.isLoggedIn) NotesList else Landing
     val backStack = rememberNavBackStack(initialScreen)
 
@@ -135,7 +136,17 @@ fun NoteMarkNavigation(
                     NavEntry(
                         key = key
                     ) {
-
+                        NotesSettingsScreenRoot(
+                            modifier = modifier,
+                            navigateToLogin = {
+                                backStack.clear()
+                                backStack.add(Login)
+                            },
+                            navigateToNotesList = {
+                                backStack.removeLastOrNull()
+                                backStack.add(NotesList)
+                            }
+                        )
                     }
                 }
 

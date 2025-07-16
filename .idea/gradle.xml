@@ -31,10 +31,15 @@
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/database" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation/designsystem" />
             <option value="$PROJECT_DIR$/core/presentation/ui" />
+            <option value="$PROJECT_DIR$/notes" />
+            <option value="$PROJECT_DIR$/notes/data" />
+            <option value="$PROJECT_DIR$/notes/domain" />
+            <option value="$PROJECT_DIR$/notes/presentation" />
           </set>
         </option>
       </GradleProjectSettings>

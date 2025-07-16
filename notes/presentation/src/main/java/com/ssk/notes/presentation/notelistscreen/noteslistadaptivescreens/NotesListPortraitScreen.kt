@@ -36,7 +36,9 @@ fun NotesListPortraitScreen(
         topBar = {
             NotesListTopBar(
                 notesListState = notesListState,
-                onSettingsClick = {}
+                onSettingsClick = {
+                    onAction(NotesListAction.OnSettingsClicked)
+                }
             )
         },
         floatingActionButton = {

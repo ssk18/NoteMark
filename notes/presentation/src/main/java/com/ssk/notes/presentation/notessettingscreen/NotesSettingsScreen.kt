@@ -36,7 +36,7 @@ fun NotesSettingsScreenRoot(
     ObserveAsEvents(viewModel.eventChannel) { event ->
         when (event) {
             NotesSettingsEvent.NavigateToLogin -> navigateToLogin()
-            NotesSettingsEvent.NavigateToNotesList -> navigateToNotesList
+            NotesSettingsEvent.NavigateToNotesList -> navigateToNotesList()
         }
     }
 
