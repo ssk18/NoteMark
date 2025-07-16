@@ -17,3 +17,6 @@ data object NotesList : NavKey
 
 @Serializable
 data class NoteDetail(val noteId: String) : NavKey
+
+@Serializable
+data object Settings : NavKey

@@ -34,7 +34,10 @@ fun NotesListPortraitScreen(
     NoteMarkScaffold(
         modifier = modifier,
         topBar = {
-            NotesListTopBar(notesListState = notesListState)
+            NotesListTopBar(
+                notesListState = notesListState,
+                onSettingsClick = {}
+            )
         },
         floatingActionButton = {
             NoteMarkFab(

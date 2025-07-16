@@ -105,6 +105,9 @@ fun NoteMarkNavigation(
                             modifier = modifier,
                             navigateToNoteDetail = {
                                 backStack.add(NoteDetail(it))
+                            },
+                            navigateToSettings = {
+                                backStack.add(Settings)
                             }
                         )
                     }
@@ -125,6 +128,14 @@ fun NoteMarkNavigation(
                                 backStack.add(NotesList)
                             }
                         )
+                    }
+                }
+
+                is Settings -> {
+                    NavEntry(
+                        key = key
+                    ) {
+
                     }
                 }
 

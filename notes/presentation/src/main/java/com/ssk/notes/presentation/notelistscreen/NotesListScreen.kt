@@ -25,7 +25,8 @@ import org.koin.androidx.compose.koinViewModel
 fun NotesListScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: NotesListViewModel = koinViewModel(),
-    navigateToNoteDetail: (String) -> Unit
+    navigateToNoteDetail: (String) -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -39,6 +40,10 @@ fun NotesListScreenRoot(
                 snackBarHostState.showSnackbar(
                     message = event.error.asString(context)
                 )
+            }
+
+            NotesListEvents.NavigateToSettings -> {
+                navigateToSettings()
             }
         }
     }

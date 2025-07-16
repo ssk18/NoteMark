@@ -72,6 +72,10 @@ class NotesListViewModel(
             NotesListAction.OnDialogDismiss -> {
                 _state.update { it.copy(showDeleteDialog = false) }
             }
+
+            NotesListAction.OnSettingsClicked -> {
+                _eventChannel.trySend(NavigateToSettings)
+            }
         }
     }
 

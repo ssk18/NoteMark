@@ -7,6 +7,6 @@ sealed interface NotesListAction {
     data object OnAddNoteClicked : NotesListAction
     data object OnDeleteNoteConfirmed: NotesListAction
     data class OnLongPressNote(val noteId: String) : NotesListAction
-
     data object OnDialogDismiss : NotesListAction
+    data object OnSettingsClicked : NotesListAction
 }
