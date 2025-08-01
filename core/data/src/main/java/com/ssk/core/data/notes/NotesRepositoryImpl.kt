@@ -3,6 +3,7 @@ package com.ssk.core.data.notes
 import com.ssk.core.domain.DataError
 import com.ssk.core.domain.EmptyResult
 import com.ssk.core.domain.Result
+import com.ssk.core.domain.SessionStorage
 import com.ssk.core.domain.asEmptyDataResult
 import com.ssk.core.domain.notes.LocalNotesDataSource
 import com.ssk.core.domain.notes.Note
@@ -13,12 +14,12 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class NotesRepositoryImpl(
     private val localNotesDataSource: LocalNotesDataSource,
     private val remoteNotesDataSource: RemoteNotesDataSource,
-    private val applicationScope: CoroutineScope
+    private val applicationScope: CoroutineScope,
+    private val sessionStorage: SessionStorage
 ) : NotesRepository {
     override suspend fun createNote(note: Note): EmptyResult<DataError> {
         val localResult = localNotesDataSource.upsertNote(note)
@@ -70,6 +71,26 @@ class NotesRepositoryImpl(
 
     override suspend fun deleteNote(note: Note) {
         localNotesDataSource.deleteNote(note)
+    }
+
+    override suspend fun logout(): EmptyResult<DataError> {
+        val result = applicationScope.async {
+            remoteNotesDataSource.logout()
+        }.await()
+
+        when (result) {
+            is Result.Error -> {
+                return result.asEmptyDataResult()
+            }
+
+            is Result.Success -> {
+                applicationScope.async {
+                    localNotesDataSource.deleteAllNotes()
+                    sessionStorage.clearTokens()
+                }.await()
+            }
+        }
+        return Result.Success(Unit)
     }
 
     override suspend fun updateNote(note: Note): EmptyResult<DataError> {

@@ -11,4 +11,6 @@ interface LocalNotesDataSource {
     fun getNotes(): Flow<List<Note>>
     fun getNoteById(id: NoteId): Flow<Note>
     suspend fun deleteNote(note: Note)
+
+    suspend fun deleteAllNotes()
 }

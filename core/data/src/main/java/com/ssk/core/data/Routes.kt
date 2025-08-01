@@ -7,4 +7,5 @@ object Routes {
     const val TOKEN_REFRESH = "/api/auth/refresh"
     const val CREATE_NOTE = "/api/notes"
     const val GET_NOTES = "/api/notes"
+    const val LOGOUT = "/api/auth/logout"
 }

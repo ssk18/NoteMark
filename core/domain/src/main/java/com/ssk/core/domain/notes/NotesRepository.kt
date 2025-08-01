@@ -13,4 +13,5 @@ interface NotesRepository {
     fun getNoteById(id: NoteId): Flow<Note>
 
     suspend fun deleteNote(note: Note)
+    suspend fun logout(): EmptyResult<DataError>
 }

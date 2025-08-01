@@ -6,6 +6,7 @@ import com.ssk.core.data.network.get
 import com.ssk.core.data.network.post
 import com.ssk.core.domain.DataError
 import com.ssk.core.domain.Result
+import com.ssk.core.domain.SessionStorage
 import com.ssk.core.domain.map
 import com.ssk.core.domain.notes.Note
 import com.ssk.core.domain.notes.PaginatedNotes
@@ -13,7 +14,8 @@ import com.ssk.core.domain.notes.RemoteNotesDataSource
 import io.ktor.client.HttpClient
 
 class KtorRemoteNoteDataSource(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val sessionStorage: SessionStorage
 ) : RemoteNotesDataSource {
     override suspend fun postNote(note: Note): Result<Note, DataError.Network> {
         val result =
@@ -46,5 +48,14 @@ class KtorRemoteNoteDataSource(
                 total = response.total
             )
         }
+    }
+
+    override suspend fun logout(): Result<Unit, DataError.Network> {
+        val refreshToken = sessionStorage.getRefreshToken()
+        val result = httpClient.post<String?, Unit>(
+            route = constructRoute(Routes.LOGOUT),
+            body = refreshToken
+        )
+        return result
     }
 }

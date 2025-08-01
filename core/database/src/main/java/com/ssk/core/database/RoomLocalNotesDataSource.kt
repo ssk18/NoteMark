@@ -39,4 +39,8 @@ class RoomLocalNotesDataSource(
     override suspend fun deleteNote(note: Note) {
         notesDao.deleteNote(note.toNoteEntity())
     }
+
+    override suspend fun deleteAllNotes() {
+        notesDao.deleteAllNotes()
+    }
 }

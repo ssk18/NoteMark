@@ -55,6 +55,9 @@ class NoteDetailsViewModel(
             NoteDetailsAction.OnDismissDialog -> {
                 _state.update { it.copy(showDialog = false) }
             }
+
+            is NoteDetailsAction.OnEditNoteClicked -> TODO()
+            NoteDetailsAction.OnReadNoteClicked -> TODO()
         }
     }
 
