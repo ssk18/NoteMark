@@ -44,9 +44,8 @@ fun NoteDetailsViewBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(NotemarkOnPrimary)
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .background(NotemarkOnPrimary),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(

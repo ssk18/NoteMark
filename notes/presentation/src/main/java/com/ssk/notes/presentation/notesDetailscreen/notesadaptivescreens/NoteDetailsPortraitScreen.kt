@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +26,7 @@ import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailState
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsAction
 
 @Composable
-fun NoteDetailsPortraitScreen(
+fun NoteDetailsEditPortraitScreen(
     modifier: Modifier = Modifier,
     noteDetailState: NoteDetailState,
     onAction: (NoteDetailsAction) -> Unit
@@ -120,7 +119,7 @@ fun NoteDetailsPortraitScreen(
 @Composable
 fun NoteDetailsPortraitScreenPreview() {
     NoteMarkTheme {
-        NoteDetailsPortraitScreen(
+        NoteDetailsEditPortraitScreen(
             noteDetailState = NoteDetailState(
                 title = "Title",
                 content = "aarfwqt dfafqvcwasw farfwacasvcw faqfafcasf"

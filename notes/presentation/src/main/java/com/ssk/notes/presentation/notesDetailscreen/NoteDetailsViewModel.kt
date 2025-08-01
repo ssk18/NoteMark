@@ -58,6 +58,7 @@ class NoteDetailsViewModel(
 
             is NoteDetailsAction.OnEditNoteClicked -> TODO()
             NoteDetailsAction.OnReadNoteClicked -> TODO()
+            NoteDetailsAction.OnBackClicked -> TODO()
         }
     }
 

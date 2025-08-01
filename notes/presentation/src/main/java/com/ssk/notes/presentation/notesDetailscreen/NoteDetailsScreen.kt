@@ -11,10 +11,12 @@ import com.ssk.core.presentation.designsystem.theme.SetStatusBarIconsColor
 import com.ssk.core.presentation.ui.ObserveAsEvents
 import com.ssk.notes.presentation.R
 import com.ssk.notes.presentation.notesDetailscreen.components.NoteDetailsAlertDialog
+import com.ssk.notes.presentation.notesDetailscreen.components.ViewMode
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailState
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsAction
 import com.ssk.notes.presentation.notesDetailscreen.handler.NoteDetailsEvent
-import com.ssk.notes.presentation.notesDetailscreen.notesadaptivescreens.NoteDetailsPortraitScreen
+import com.ssk.notes.presentation.notesDetailscreen.notesadaptivescreens.NoteDetailsEditPortraitScreen
+import com.ssk.notes.presentation.notesDetailscreen.notesadaptivescreens.NoteDetailsViewScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -47,18 +49,28 @@ fun NoteDetailsScreenRoot(
         )
     }
 
-    NoteDetailsPortraitScreen(
-        modifier = modifier,
-        noteDetailState = state,
-        onAction = viewModel::onAction
-    )
+    when(state.noteMode) {
+        ViewMode.EDIT -> NoteDetailsEditPortraitScreen(
+            modifier = modifier,
+            noteDetailState = state,
+            onAction = viewModel::onAction
+        )
+
+        ViewMode.VIEW -> {
+            NoteDetailsViewScreen(
+                modifier = modifier,
+                state = state,
+                onAction = viewModel::onAction
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NoteDetailsScreenPreview() {
     NoteMarkTheme {
-        NoteDetailsPortraitScreen(
+        NoteDetailsEditPortraitScreen(
             noteDetailState = NoteDetailState(
                 title = "Title",
                 content = "aarfwqt dfafqvcwasw farfwacasvcw faqfafcasf"
