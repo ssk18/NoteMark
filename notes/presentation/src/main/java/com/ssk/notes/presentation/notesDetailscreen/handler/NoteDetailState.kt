@@ -8,5 +8,6 @@ data class NoteDetailState(
     val showDialog: Boolean = false,
     val createdAt: String? = null,
     val lastEditedAt: String? = null,
-    val noteMode: ViewMode = ViewMode.VIEW
+    val noteMode: ViewMode = ViewMode.VIEW,
+    val showUiElements: Boolean = true
 )

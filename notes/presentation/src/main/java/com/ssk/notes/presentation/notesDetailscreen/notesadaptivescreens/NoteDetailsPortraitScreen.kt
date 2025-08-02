@@ -46,7 +46,7 @@ fun NoteDetailsEditPortraitScreen(
         floatingActionButton = {
             ExtendedFab(
                 onEditClick = {
-                    onAction(NoteDetailsAction.OnEditNoteClicked(noteDetailState.noteMode))
+                    onAction(NoteDetailsAction.OnModeChange(noteDetailState.noteMode))
                 },
                 onViewClick = {
                     onAction(NoteDetailsAction.OnReadNoteClicked)

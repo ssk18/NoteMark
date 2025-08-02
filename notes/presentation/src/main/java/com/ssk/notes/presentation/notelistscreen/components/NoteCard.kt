@@ -56,7 +56,7 @@ fun NoteCard(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
-                text = formatDate(createdAt),
+                text = createdAt.formatDate(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
             )

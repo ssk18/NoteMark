@@ -49,14 +49,24 @@ fun NoteDetailsScreenRoot(
         )
     }
 
-    when(state.noteMode) {
-        ViewMode.EDIT -> NoteDetailsEditPortraitScreen(
-            modifier = modifier,
-            noteDetailState = state,
-            onAction = viewModel::onAction
-        )
+    when (state.noteMode) {
+        ViewMode.EDIT -> {
+            NoteDetailsEditPortraitScreen(
+                modifier = modifier,
+                noteDetailState = state,
+                onAction = viewModel::onAction
+            )
+        }
 
         ViewMode.VIEW -> {
+            NoteDetailsViewScreen(
+                modifier = modifier,
+                state = state,
+                onAction = viewModel::onAction
+            )
+        }
+
+        ViewMode.READER -> {
             NoteDetailsViewScreen(
                 modifier = modifier,
                 state = state,

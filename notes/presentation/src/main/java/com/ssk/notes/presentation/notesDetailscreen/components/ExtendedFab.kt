@@ -26,6 +26,7 @@ import com.ssk.notes.presentation.R
 @Composable
 fun ExtendedFab(
     modifier: Modifier = Modifier,
+    currentMode: ViewMode,
     onEditClick: () -> Unit,
     onViewClick: () -> Unit
 ) {
@@ -50,6 +51,11 @@ fun ExtendedFab(
                 Icon(
                     painter = painterResource(R.drawable.ic_edit),
                     contentDescription = "Edit Note",
+                    tint = if (currentMode == ViewMode.EDIT) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    }
                 )
             }
             IconButton(
@@ -58,6 +64,11 @@ fun ExtendedFab(
                 Icon(
                     painter = painterResource(R.drawable.ic_view),
                     contentDescription = "View Note",
+                    tint = if (currentMode == ViewMode.READER) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    }
                 )
             }
         }
@@ -67,7 +78,8 @@ fun ExtendedFab(
 @Stable
 enum class ViewMode {
     EDIT,
-    VIEW
+    VIEW,
+    READER
 }
 
 @Preview(showBackground = true)
@@ -75,6 +87,7 @@ enum class ViewMode {
 fun ExtendedFabPreview() {
     NoteMarkTheme {
         ExtendedFab(
+            currentMode = ViewMode.VIEW,
             onEditClick = {},
             onViewClick = {}
         )

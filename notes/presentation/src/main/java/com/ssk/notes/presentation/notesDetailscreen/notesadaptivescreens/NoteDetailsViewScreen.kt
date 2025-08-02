@@ -1,12 +1,18 @@
 package com.ssk.notes.presentation.notesDetailscreen.notesadaptivescreens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -33,21 +39,34 @@ fun NoteDetailsViewScreen(
 ) {
     NoteMarkScaffold(
         topBar = {
-            NoteDetailsViewBar(
-                onBackClicked = {
-                    onAction(NoteDetailsAction.OnBackClicked)
-                }
-            )
+            AnimatedVisibility(
+                visible = state.showUiElements || state.noteMode != ViewMode.READER,
+                enter = fadeIn(tween(300)),
+                exit = fadeOut(tween(5000))
+            ) {
+                NoteDetailsViewBar(
+                    onBackClicked = {
+                        onAction(NoteDetailsAction.OnBackClicked)
+                    }
+                )
+            }
         },
         floatingActionButton = {
-            ExtendedFab(
-                onEditClick = {
-                    onAction(NoteDetailsAction.OnEditNoteClicked(state.noteMode))
-                },
-                onViewClick = {
-                    onAction(NoteDetailsAction.OnReadNoteClicked)
-                },
-            )
+            AnimatedVisibility(
+                visible = state.showUiElements || state.noteMode != ViewMode.READER,
+                enter = fadeIn(tween(300)),
+                exit = fadeOut(tween(5000))
+            ) {
+                ExtendedFab(
+                    currentMode = state.noteMode,
+                    onEditClick = {
+                        onAction(NoteDetailsAction.OnModeChange(ViewMode.EDIT))
+                    },
+                    onViewClick = {
+                        onAction(NoteDetailsAction.OnModeChange(ViewMode.READER))
+                    },
+                )
+            }
         },
         floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
@@ -59,7 +78,16 @@ fun NoteDetailsViewScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp, vertical  = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .let { modifier ->
+                    if (state.noteMode == ViewMode.READER) {
+                        modifier.pointerInput(Unit) {
+                            detectTapGestures {
+                                onAction(NoteDetailsAction.OnReadNoteClicked)
+                            }
+                        }
+                    } else modifier
+                },
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -87,12 +115,12 @@ fun NoteDetailsViewScreen(
                 ) {
                     Text(
                         text = "Date created",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
                         text = state.createdAt.toString(),
-                        style = MaterialTheme.typography.displaySmall,
+                        style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -102,12 +130,12 @@ fun NoteDetailsViewScreen(
                 ) {
                     Text(
                         text = "Last edited",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
                         text = state.createdAt.toString(),
-                        style = MaterialTheme.typography.displaySmall,
+                        style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
